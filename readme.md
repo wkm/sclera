@@ -1,2 +1,5 @@
-=== Sclera ===
-== Experimentations with Swing in Scala ==
+Sclera
+======
+
+Experimentations with Swing in Scala
+------------------------------------
