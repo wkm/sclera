@@ -9,6 +9,6 @@ class UXPadEntry(
     var in: String,
     var out: String = "output"
 ) extends UXPadEntryGroup {
-  contents += new Label("In: " + in)
-  contents += new Label("Out: " + out)
+  contents += new UXTextComponent(text = "In: "+in)
+  contents += new UXTextComponent(text = "Out: "+out)
 }
