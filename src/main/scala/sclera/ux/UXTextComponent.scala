@@ -3,6 +3,7 @@ package sclera.ux
 import sclera.sclera.format.TextFormat
 import swing.{Swing, Label}
 import java.awt.{Color, GraphicsEnvironment, Font}
+import sclera.format.color.SolarizedColorPalette
 
 class UXTextComponent(
     override val text:String,
@@ -11,6 +12,6 @@ class UXTextComponent(
   extends Label(text)
   with UXObjectComponent {
 
-  font = new Font("Helvetica", Font.PLAIN, 13);
-  foreground = new Color(84, 123, 151);
+  font = new Font("Helvetica", Font.PLAIN, 12);
+  foreground = SolarizedColorPalette("base00")
 }
