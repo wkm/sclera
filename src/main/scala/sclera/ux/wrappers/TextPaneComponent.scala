@@ -3,6 +3,7 @@ package sclera.ux.wrappers
 import swing.{TextComponent, Component}
 import javax.swing.JTextPane
 import javax.swing.text.EditorKit
+import java.awt.Font
 
 
 /**

@@ -4,20 +4,24 @@ package sclera.ux.editor
 import javax.swing.JTextPane
 import sclera.ux.UXObjectComponent
 import javax.swing.text._
-import java.awt.Graphics
 import collection.immutable.{TreeMap, SortedMap}
 import sclera.ux.wrappers.TextPaneComponent
+import sclera.format.color.SolarizedColorPalette
+import java.awt.{Font, Graphics}
 
 class UXEditorComponent
   extends TextPaneComponent {
   editorKit =  new ScalaEditorKit()
   contentType = "text/scala"
+  font = new Font("Menlo", Font.BOLD, 12)
 }
 
 class ScalaEditorKit(
   val viewFactory: ScalaViewFactory = new ScalaViewFactory()
 ) extends StyledEditorKit {
   override def getContentType = "text/xml"
+
+  
 }
 
 class ScalaViewFactory extends ViewFactory {

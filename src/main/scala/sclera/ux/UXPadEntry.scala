@@ -4,7 +4,7 @@ import editor.UXEditorComponent
 import swing.{Orientation, Label, BoxPanel, Component}
 
 /**
- * A representation of an individual entry in a Sclera pad
+ * A representation of an individual input/output pair in a Sclera pad
  */
 class UXPadEntry(
     var in: String,
