@@ -18,5 +18,5 @@ class ColorPalette {
   }
 
   def apply(name: String): Color =
-    return colors.get(name).getOrElse(Color.decode("d33682"))
+    return colors.get(name).getOrElse(Color.decode("0xd33682"))
 }
