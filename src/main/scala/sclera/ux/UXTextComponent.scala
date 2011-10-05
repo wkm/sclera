@@ -10,8 +10,8 @@ class UXTextComponent(
     var textFormat : Option[TextFormat] = Option.empty
 )
   extends Label(text)
-  with UXObjectComponent {
+  with UXObjectComponent
+{
 
   font = new Font("Helvetica", Font.PLAIN, 12);
-  foreground = SolarizedColorPalette("base00")
 }

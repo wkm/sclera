@@ -1,7 +1,8 @@
 package sclera.ux
 
 import editor.UXEditorComponent
-import swing.{Orientation, Label, BoxPanel, Component}
+import javax.swing.Box
+import swing._
 
 /**
  * A representation of an individual input/output pair in a Sclera pad

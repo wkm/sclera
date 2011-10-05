@@ -11,6 +11,7 @@ class UXPad extends MainFrame {
   boxPanel.contents += new UXPadEntry("a")
   boxPanel.contents += new UXPadEntry("b")
   boxPanel.contents += new UXPadEntry("c")
+  boxPanel.contents += Swing.VGlue
 
   menuBar = new MenuBar() {
     contents += new Menu("Item A")

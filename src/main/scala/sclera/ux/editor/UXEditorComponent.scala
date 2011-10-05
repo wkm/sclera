@@ -7,13 +7,15 @@ import javax.swing.text._
 import collection.immutable.{TreeMap, SortedMap}
 import sclera.ux.wrappers.TextPaneComponent
 import sclera.format.color.SolarizedColorPalette
-import java.awt.{Font, Graphics}
+import java.awt.{Dimension, Font, Graphics}
 
 class UXEditorComponent
   extends TextPaneComponent {
   editorKit =  new ScalaEditorKit()
   contentType = "text/scala"
   font = new Font("Menlo", Font.BOLD, 12)
+  foreground = SolarizedColorPalette("base00")
+  background = SolarizedColorPalette("base3")
 }
 
 class ScalaEditorKit(
