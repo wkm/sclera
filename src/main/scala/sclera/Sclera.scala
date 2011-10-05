@@ -5,22 +5,13 @@ import swing._
 import swing.Color
 import event.EditDone
 import java.awt.{Dimension, Color}
-import javax.swing.BorderFactory
-import ux.UXPadEntry
+import ux.{UXPad, UXPadEntry}
+import javax.swing.{UIManager, BorderFactory}
 
 object Sclera extends SimpleSwingApplication {
-  var boxPanel = new BoxPanel(Orientation.Vertical)
-  boxPanel.contents += new UXPadEntry("a")
-  boxPanel.contents += new UXPadEntry("b")
-  boxPanel.contents += new UXPadEntry("c")
-
-  // fully left align
-  boxPanel.xLayoutAlignment = 0
-  boxPanel.background = Color.WHITE
+  System.setProperty("apple.laf.useScreenMenuBar", "true")
+  System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Sclera")
+  UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
   
-  def top = new MainFrame {
-    title = "Sclera"
-    contents = new ScrollPane() {contents = boxPanel}
-    size = new Dimension(600, 800)
-  }
+  def top = new UXPad()
 }
