@@ -12,6 +12,5 @@ class UXTextComponent(
   extends Label(text)
   with UXObjectComponent
 {
-
   font = new Font("Helvetica", Font.PLAIN, 12);
 }
