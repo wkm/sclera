@@ -2,57 +2,37 @@ package sclera.ux
 
 import swing._
 import javax.swing.border.EtchedBorder
-import java.awt.{BorderLayout, Color, Dimension}
-import javax.swing.{JTextPane, JPanel, BorderFactory}
 import java.io.StringReader
+import wrappers.{JNestedTextComponent, NestedTextComponent}
+import javax.swing.{JLabel, JTextPane, JPanel, BorderFactory}
+import java.awt.{Dimension, BorderLayout, Color}
 
 /**
  * Represents a single Sclera pad/file
  */
 class UXPad extends MainFrame {
-  var boxPanel = new Component {
-    override lazy val peer = new JTextPane()
-
-    peer.insertComponent(createPane())
-    peer.insertComponent(createPane())
-    peer.setEditable(false)
-
-    def createPane() = {
-      val panel = new JPanel()
-      panel.setLayout(new BorderLayout)
-
-      val textpane = new JTextPane()
-      textpane.setBorder(BorderFactory.createMatteBorder(0,0,1,2,Color.BLUE))
-
-      panel.add(textpane)
-
-      peer.getEditorKit.read(new StringReader("\n"), peer.getDocument, peer.getDocument.getLength)
-
-      panel
+  var boxPanel = new NestedTextComponent {
+    contents += new UXPadEntryGroup {
+      contents += new UXPadEntry("hi")
     }
-  } 
-  
-//  boxPanel.contents += new UXPadEntry("a")
-//  boxPanel.contents += new UXPadEntry("b")
-
-//  boxPanel.contents += new UXPadEntry("a")
-//  boxPanel.contents += new UXPadEntry("b")
-//  boxPanel.contents += new UXPadEntry("c")
+    contents += new UXPadEntry("1+2")
+  }
 
   menuBar = new MenuBar() {
-    contents += new Menu("Item A")
-    contents += new Menu("Item B")
-    contents += new Menu("Item C")
-    contents += new Menu("Item D") {
-      contents += new MenuItem("A")
-      contents += new MenuItem("B")
-      contents += new RadioMenuItem("radio")
-      contents += new CheckMenuItem("check")
+    contents += new Menu("File")
+    contents += new Menu("Edit")
+    contents += new Menu("Help") {
+      contents += new MenuItem("item 1")
+      contents += new MenuItem("item 2")
+      contents += new RadioMenuItem("radio item")
+      contents += new CheckMenuItem("check item ")
     }
   }
 
   
   title = "Sclera"
-  contents = boxPanel
-  size = new Dimension(600, 800)
+  contents = new ScrollPane() {
+    contents = boxPanel
+  }
+  size = new Dimension(400, 500)
 }

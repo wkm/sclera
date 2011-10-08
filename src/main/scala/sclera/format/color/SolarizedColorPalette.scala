@@ -17,4 +17,7 @@ object SolarizedColorPalette extends ColorPalette {
   addHexColor("blue",    "#268bd2")
   addHexColor("cyan",    "#2aa198")
   addHexColor("green",   "#859900")
+
+  addHexColor("black",   "#000000")
+  addHexColor("white",   "#ffffff")
 }

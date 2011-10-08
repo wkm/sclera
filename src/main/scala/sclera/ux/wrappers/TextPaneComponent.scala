@@ -11,27 +11,11 @@ import java.awt.{Color, Dimension, Font}
  * for the EditorPane container that wraps JEditorPane
  */
 class TextPaneComponent extends TextComponent {
-  override lazy val peer: JTextPane = new JTextPane() //with SuperMixin
+  override lazy val peer: JTextPane = new JTextPane() with SuperMixin
 
   def contentType: String = peer.getContentType
   def contentType_=(t: String) = peer.setContentType(t)
 
   def editorKit: EditorKit = peer.getEditorKit
   def editorKit_=(kit: EditorKit) = peer.setEditorKit(kit)
-
-  peer.getDocument.addDocumentListener(new DocumentListener() {
-    println("document listener created")
-
-    override def insertUpdate(e:DocumentEvent) = recompute()
-    override def removeUpdate(e:DocumentEvent) = recompute()
-    override def changedUpdate(e:DocumentEvent) = recompute()
-  })
-
-  peer.setBorder(BorderFactory.createMatteBorder(0,0,1,2,Color.BLUE))
-
-  def recompute() {
-    println("recomputing")
-    maximumSize = minimumSize
-    preferredSize = minimumSize
-  }
 }
