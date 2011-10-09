@@ -12,10 +12,8 @@ import java.awt.{Dimension, BorderLayout, Color}
  */
 class UXPad extends MainFrame {
   var boxPanel = new NestedTextComponent {
-    contents += new UXPadEntryGroup {
-      contents += new UXPadEntry("hi")
-    }
-    contents += new UXPadEntry("1+2")
+    contents += new UXPadEntry("12 + 13", isInput = true)
+    contents += new UXPadEntry("15")
   }
 
   menuBar = new MenuBar() {

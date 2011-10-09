@@ -1,20 +1,32 @@
 
 package sclera.ux.editor
 
-import javax.swing.JTextPane
-import sclera.ux.UXObjectComponent
 import javax.swing.text._
 import collection.immutable.{TreeMap, SortedMap}
 import sclera.ux.wrappers.TextPaneComponent
 import sclera.format.color.SolarizedColorPalette
 import java.awt.{Dimension, Font, Graphics}
+import sclera.util.SwingKit
+import javax.swing.{JOptionPane, JTextPane}
+import swing.event.{Key, KeyTyped, KeyEvent}
+import sclera.ux.{UX, UXObjectComponent}
 
 class UXEditorComponent
   extends TextPaneComponent {
-  editorKit =  new ScalaEditorKit()
-  contentType = "text/scala"
-  font = new Font("Menlo", Font.BOLD, 12)
-  foreground = SolarizedColorPalette("black")
+  SwingKit.executeLater {
+    editorKit =  new ScalaEditorKit()
+    contentType = "text/scala"
+    font = new Font("Menlo", Font.BOLD, 12)
+    foreground = SolarizedColorPalette("black")
+
+    listenTo(keys)
+    reactions += {
+      // evaluation
+      case KeyTyped(_, text, Key.Modifier.Shift, _)
+        if text.toInt == 13 =>
+        UX.Processor ! UX.Evaluate()
+    }
+  } 
 }
 
 class ScalaEditorKit(

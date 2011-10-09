@@ -1,10 +1,10 @@
 package sclera.ux.wrappers
 
 import swing.{TextComponent, Component}
-import javax.swing.text.EditorKit
 import javax.swing.event.{DocumentEvent, DocumentListener}
 import javax.swing.{BorderFactory, JTextPane}
 import java.awt.{Color, Dimension, Font}
+import javax.swing.text.{Document, EditorKit}
 
 /**
  * Lightweight container wrapper for JTextPane based on the source code
@@ -18,4 +18,7 @@ class TextPaneComponent extends TextComponent {
 
   def editorKit: EditorKit = peer.getEditorKit
   def editorKit_=(kit: EditorKit) = peer.setEditorKit(kit)
+
+  def document: Document = peer.getDocument
+  def document_=(doc: Document) = peer.setDocument(doc)
 }
