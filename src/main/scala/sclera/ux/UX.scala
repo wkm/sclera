@@ -12,13 +12,38 @@ import actors.Actor._
  */
 object UX {
 
+  case class Focus(pad: UXPad)
+  case class LostFocus(pad: UXPad)
+
+  case class Handled(msg: Any)
+
   case class Evaluate()
+
+
+
+  var focusedPad: Option[UXPad] = None
 
   val Processor : Actor = actor {
     loop {
-      receive {
+      react {
+        case Focus(pad) =>
+          println("focused")
+          focusedPad = Some(pad)
+          reply(Handled(Focus(pad)))
+
+        case LostFocus(pad) =>
+          println("Lost focus")
+          if(focusedPad.isDefined && focusedPad.get == pad)
+            focusedPad = None
+          // even if somehow this is isn't the focused pad, reply
+          // otherwise we will freeze
+          reply(Handled(LostFocus(pad)))
+
         case Evaluate() =>
-          println("Evaluating")
+          if(focusedPad.isEmpty)
+            println("no pad in focus")
+          else
+            focusedPad.get.processor ! Evaluate()
       }
     }
   }

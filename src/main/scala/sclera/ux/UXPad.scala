@@ -1,11 +1,14 @@
 package sclera.ux
 
 import swing._
+import event.{WindowDeactivated, WindowActivated, FocusGained}
 import javax.swing.border.EtchedBorder
 import java.io.StringReader
 import wrappers.{JNestedTextComponent, NestedTextComponent}
 import javax.swing.{JLabel, JTextPane, JPanel, BorderFactory}
 import java.awt.{Dimension, BorderLayout, Color}
+import actors.Actor
+import actors.Actor._
 
 /**
  * Represents a single Sclera pad/file
@@ -33,4 +36,26 @@ class UXPad extends MainFrame {
     contents = boxPanel
   }
   size = new Dimension(400, 500)
+
+  listenTo(this)
+  reactions += {
+    case WindowActivated(source) =>
+      println("FOCUS")
+      if(source == peer)
+        UX.Processor !! UX.Focus(this)
+
+    case WindowDeactivated(source) =>
+      println("UNFOCUS")
+      if(source == peer)
+        UX.Processor !! UX.LostFocus(this)
+  }
+
+  val processor: Actor = actor {
+    loop {
+      receive {
+        case UX.Evaluate() =>
+          println("UXPad: evaluate()")
+      }
+    }
+  }
 }

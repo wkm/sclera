@@ -32,7 +32,7 @@ class UXEditorComponent
 class ScalaEditorKit(
   val viewFactory: ScalaViewFactory = new ScalaViewFactory()
 ) extends StyledEditorKit {
-  override def getContentType = "text/xml"
+  override def getContentType = "text/scala"
 
   
 }
