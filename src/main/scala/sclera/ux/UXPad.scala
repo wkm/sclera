@@ -42,12 +42,12 @@ class UXPad extends MainFrame {
     case WindowActivated(source) =>
       println("FOCUS")
       if(source == peer)
-        UX.Processor !! UX.Focus(this)
+        UX.Processor !? UX.Focus(this)
 
     case WindowDeactivated(source) =>
       println("UNFOCUS")
       if(source == peer)
-        UX.Processor !! UX.LostFocus(this)
+        UX.Processor !? UX.LostFocus(this)
   }
 
   val processor: Actor = actor {
