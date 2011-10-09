@@ -1,10 +1,10 @@
 package sclera.evaluator
 
-import tools.nsc.interpreter.IMain
 import sun.tools.javap.JavapPrinter
-import java.io.{PipedWriter, PrintWriter}
 import tools.nsc.{Interpreter, Settings}
 import sclera.ux.UXPad
+import tools.nsc.interpreter.{Results, IMain}
+import java.io._
 
 /**
  * sclera.evaluator.InterpreterWrapper
@@ -16,15 +16,24 @@ class InterpreterWrapper {
   settings.embeddedDefaults[UXPad]
 
   val pipedWriter = new PipedWriter()
+  val pipeReader = new PipedReader()
   val output = new PrintWriter(pipedWriter)
-  val main = new IMain(settings, output)
+  val main = new ScleraIMain(settings, output)
+  pipedWriter.connect(pipeReader)
+
+  val strReader = new BufferedReader(pipeReader)
 
   println("#### Wrapper Created")
   
   def interpret(input: String) : Any = {
     println("---- INTERP: "+input)
     val result = main.interpret(input)
-    println("INTERP["+input+"] => "+result)
+    val request = main.getPreviousRequest
+
+    println("| result:  "+result);
+    println("| eval:    "+request.getEval)
+    println("| types:   "+request.typeNames)
+    println("| terms:   "+request.termNames)
   }
 
   def errorHandler(res: String) = {

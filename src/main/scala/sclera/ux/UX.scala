@@ -35,6 +35,7 @@ object UX {
           println("Lost focus")
           if(focusedPad.isDefined && focusedPad.get == pad)
             focusedPad = None
+          
           // even if somehow this is isn't the focused pad, reply
           // otherwise we will freeze
           reply(Handled(LostFocus(pad)))
