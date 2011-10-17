@@ -11,6 +11,7 @@ object IMainSpecs extends Specification {
       System.setProperty("settings.usejavacp.value", "true")
       val settings = new Settings()
       settings.embeddedDefaults[UXPad]
+      settings.processArgumentString("-usejavacp")
 
       class MyIMain extends IMain(settings) {
         def lastRequest = prevRequestList.last
@@ -20,7 +21,7 @@ object IMainSpecs extends Specification {
       n.interpret("val a = 1")
 
       val r = n.lastRequest
-      r.lineRep.call(r.lineRep.evalName).must_== (1)
+      r.lineRep.call("$result").must_== (1)
     }
   }
 }
