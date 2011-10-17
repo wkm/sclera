@@ -15,7 +15,7 @@ object Evaluator {
   case class Evaluate(input: String)
   case class Result(output: Any)
 
-  val interpreter = new ILoop();
+  val interpreter = new InterpreterWrapper();
 
   def errorHandler(result: String) {
     println("ERROR: "+result)

@@ -14,9 +14,7 @@ object UX {
 
   case class Focus(pad: UXPad)
   case class LostFocus(pad: UXPad)
-
   case class Handled(msg: Any)
-
   case class Evaluate()
 
 
