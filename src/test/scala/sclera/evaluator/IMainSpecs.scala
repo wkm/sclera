@@ -8,9 +8,7 @@ import sclera.ux.UXPad
 object IMainSpecs extends Specification {
   "IMain" should {
     "give term value" in {
-      System.setProperty("settings.usejavacp.value", "true")
       val settings = new Settings()
-      settings.embeddedDefaults[UXPad]
       settings.processArgumentString("-usejavacp")
 
       class MyIMain extends IMain(settings) {

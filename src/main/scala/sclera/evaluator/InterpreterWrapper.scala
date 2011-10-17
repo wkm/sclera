@@ -30,28 +30,12 @@ class InterpreterWrapper {
     val result = main.interpret(input)
     val request = main.getPreviousRequest
 
-    println(request.fullPath("res0"))
+//    val interpResult = new InterpretedResult(result, null)
 
-    println("DEFINED NAMES: "+request.definedNames)
-    println("DEFINED SYMBS: "+request.definedSymbols)
+//    println("DEFINED NAMES: "+request.definedNames)
+//    println("DEFINED SYMBS: "+request.definedSymbols)
 
-    println("++++ VALUE OF TERM: "+main.valueOfTerm(request.fullPath("res0")))
-    println("++++ EVAL: "+request.getEval)
-
-    val value = main.valueOfTerm(main.mostRecentVar).getOrElse(sys.error("no result"))
-    println("VALUE ====> "+value)
-
-    println("VALUES:")
-
-
-    for(name <- request.definedNames) {
-      val value : this.main.global.Symbol = request.definedSymbols.get(name).get
-
-      value match {
-        case term: this.main.global.TermSymbol =>
-          println("\tterm: "+name+" ==> "+value)
-      }
-    }
+//    return interpResult
   }
 
 
