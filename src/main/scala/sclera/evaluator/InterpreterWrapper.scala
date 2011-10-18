@@ -7,6 +7,7 @@ import tools.nsc.interpreter.{Results, IMain}
 import java.io._
 
 import tools.nsc.interpreter.IR
+import sclera.util.Loggable
 
 /**
  * sclera.evaluator.InterpreterWrapper
@@ -15,7 +16,7 @@ import tools.nsc.interpreter.IR
 
 case class InterpretedResult(status: IR.Result, value:AnyRef);
 
-class InterpreterWrapper {
+class InterpreterWrapper extends Loggable {
   val settings = new Settings()
   settings.embeddedDefaults[UXPad]
 
@@ -31,6 +32,9 @@ class InterpreterWrapper {
     val result = main.interpret(input)
     val request = main.getPreviousRequest
     val value = request.lineRep.call("$result")
+
+    logger.trace("{} => {}", input, value)
+
 
     return InterpretedResult(result, value)
   }

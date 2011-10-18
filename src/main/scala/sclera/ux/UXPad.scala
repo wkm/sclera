@@ -9,11 +9,12 @@ import javax.swing.{JLabel, JTextPane, JPanel, BorderFactory}
 import java.awt.{Dimension, BorderLayout, Color}
 import actors.Actor
 import actors.Actor._
+import sclera.util.Loggable
 
 /**
  * Represents a single Sclera pad/file
  */
-class UXPad extends MainFrame {
+class UXPad extends MainFrame with Loggable {
   var boxPanel = new NestedTextComponent {
     contents += new UXPadEntry("12 + 13", isInput = true)
     contents += new UXPadEntry("15")
@@ -40,12 +41,12 @@ class UXPad extends MainFrame {
   listenTo(this)
   reactions += {
     case WindowActivated(source) =>
-      println("FOCUS")
+      logger.trace("WindowActivated")
       if(source == peer)
         UX.Processor !? UX.Focus(this)
 
     case WindowDeactivated(source) =>
-      println("UNFOCUS")
+      logger.trace("WindowDeactivated")
       if(source == peer)
         UX.Processor !? UX.LostFocus(this)
   }
@@ -54,7 +55,7 @@ class UXPad extends MainFrame {
     loop {
       receive {
         case UX.Evaluate() =>
-          println("UXPad: evaluate()")
+          logger.trace("UX.Evaluate")
       }
     }
   }
