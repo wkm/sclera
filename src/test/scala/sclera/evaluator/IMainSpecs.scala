@@ -7,7 +7,7 @@ import sclera.ux.UXPad
 
 object IMainSpecs extends Specification {
   "IMain" should {
-    "should always give last request" in {
+    "give term value" in {
       val settings = new Settings()
       settings.embeddedDefaults[Specification]
 
