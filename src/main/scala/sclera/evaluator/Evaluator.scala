@@ -25,9 +25,8 @@ object Evaluator {
     loop {
       react {
         case Evaluator.Evaluate(input) =>
-          println("INPUT => " + input)
           val result = interpreter.interpret(input)
-          println(result)
+          reply(Result(result.value))
       }
     }
   }
