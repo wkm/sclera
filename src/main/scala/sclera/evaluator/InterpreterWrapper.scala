@@ -6,10 +6,14 @@ import sclera.ux.UXPad
 import tools.nsc.interpreter.{Results, IMain}
 import java.io._
 
+import tools.nsc.interpreter.IR
+
 /**
  * sclera.evaluator.InterpreterWrapper
  * wiktor - 2011
  */
+
+case class InterpretedResult(status: IR.Result, value:AnyRef);
 
 class InterpreterWrapper {
   val settings = new Settings()
@@ -22,20 +26,13 @@ class InterpreterWrapper {
   pipedWriter.connect(pipeReader)
 
   val strReader = new BufferedReader(pipeReader)
-
-  println("#### Wrapper Created")
   
-  def interpret(input: String) : Any = {
-    println("---- INTERP: "+input)
+  def interpret(input: String) : InterpretedResult = {
     val result = main.interpret(input)
     val request = main.getPreviousRequest
+    val value = request.lineRep.call("$result")
 
-//    val interpResult = new InterpretedResult(result, null)
-
-//    println("DEFINED NAMES: "+request.definedNames)
-//    println("DEFINED SYMBS: "+request.definedSymbols)
-
-//    return interpResult
+    return InterpretedResult(result, value)
   }
 
 
