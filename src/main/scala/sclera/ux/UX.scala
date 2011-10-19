@@ -12,10 +12,14 @@ import actors.Actor._
  */
 object UX {
 
-  case class Focus(pad: UXPad)
-  case class LostFocus(pad: UXPad)
-  case class Handled(msg: Any)
-  case class Evaluate()
+  sealed abstract class UXEvent
+  case class Focus(pad: UXPad) extends UXEvent
+  case class LostFocus(pad: UXPad) extends UXEvent
+  case class Handled(msg: Any) extends UXEvent
+  case class Evaluate() extends UXEvent
+
+  case class ChangeEntryFocus(entry: UXPadEntry) extends UXEvent
+  case class LoseEntryFocus(entry: UXPadEntry) extends UXEvent
 
 
 

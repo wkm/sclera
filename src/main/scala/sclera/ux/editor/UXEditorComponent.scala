@@ -9,10 +9,24 @@ import java.awt.{Dimension, Font, Graphics}
 import sclera.util.SwingKit
 import javax.swing.{JOptionPane, JTextPane}
 import swing.event.{Key, KeyTyped, KeyEvent}
-import sclera.ux.{UX, UXObjectComponent}
+import java.awt.event.{FocusEvent, FocusListener}
+import sclera.ux.{UXPadEntry, UXPad, UX, UXObjectComponent}
+import java.io.StringWriter
 
-class UXEditorComponent
-  extends TextPaneComponent {
+class UXEditorComponent(
+    val padEntry: UXPadEntry
+) extends TextPaneComponent {
+
+  /**
+   * extract the text content from the text pane component
+   */
+  def textContent: String = {
+    val kit = editorKit
+    val stringWriter = new StringWriter()
+    kit.write(stringWriter, document, 0, document.getLength)
+    return stringWriter.toString
+  }
+
   SwingKit.executeLater {
     editorKit =  new ScalaEditorKit()
     contentType = "text/scala"
@@ -26,6 +40,16 @@ class UXEditorComponent
         if text.toInt == 13 =>
         UX.Processor ! UX.Evaluate()
     }
+
+    peer.addFocusListener(new FocusListener {
+      def focusGained(e: FocusEvent) {
+        padEntry.pad.processor !? UX.ChangeEntryFocus(padEntry)
+      }
+
+      def focusLost(e: FocusEvent) {
+        padEntry.pad.processor !? UX.LoseEntryFocus(padEntry)
+      }
+    })
   } 
 }
 

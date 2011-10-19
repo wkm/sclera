@@ -21,4 +21,13 @@ class NestedTextComponent extends scala.swing.Component with SequentialContainer
   // type coercion to javax.swing.JComponent
   for(listener <- peer.getContainerListeners)
     peer.removeContainerListener(listener)
+
+
+  def selectedComponent: Option[java.awt.Component] = {
+    val start = peer.getSelectionStart
+    val end = peer.getSelectionEnd
+
+    val javaxComponent = peer.getComponentAt(start, end)
+    Option(javaxComponent)
+  }
 }
