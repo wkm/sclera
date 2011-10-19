@@ -50,32 +50,7 @@ class UXPad extends MainFrame with Loggable {
       logger.trace("WindowDeactivated")
       if(source == peer)
         UX.Processor !? UX.LostFocus(this)
-  } 
-
-  var focusedEntry: Option[UXPadEntry] = None
-
-  val processor: Actor = actor {
-    loop {
-      receive {
-        case msg@ UX.ChangeEntryFocus(entry) =>
-          logger.trace("{}", entry)
-          focusedEntry = Option(entry)
-          reply(UX.Handled(msg))
-
-        case msg@ UX.LoseEntryFocus(entry) =>
-          logger.trace("{}", entry)
-          if(focusedEntry == entry)
-            focusedEntry = None
-          reply(UX.Handled(msg))
-
-        case UX.Evaluate() =>
-          logger.trace("UX.Evaluate")
-          if(focusedEntry.isDefined) {
-            val entry = focusedEntry.get
-            Evaluator.Processor ! Evaluator.Evaluate(entry.entryContents.get)
-          } else
-            logger.trace("\tno entry in focus")
-      }
-    }
   }
+
+  val processor: Actor = new UXPadProcessor(this).processor
 }
