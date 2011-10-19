@@ -30,4 +30,8 @@ class NestedTextComponent extends scala.swing.Component with SequentialContainer
     val javaxComponent = peer.getComponentAt(start, end)
     Option(javaxComponent)
   }
+
+  def insertAfterComponent(comp: java.awt.Component) {
+//    peer.getCom
+  }
 }

@@ -20,7 +20,7 @@ class UXPadProcessor (
   
   val processor = actor {
     loop {
-      receive {
+      react {
         case msg@ UX.ChangeEntryFocus(entry) =>
           logger.trace("{}", entry)
           focusedEntry = Option(entry)
@@ -39,6 +39,10 @@ class UXPadProcessor (
             Evaluator.Processor ! Evaluator.Evaluate(entry.entryContents.get)
           } else
             logger.trace("\tno entry in focus")
+
+        case Evaluator.Result(value) =>
+          logger.trace("Evaluator.Result")
+          logger.trace("\t=> {}", value)
         }
       }
     }
