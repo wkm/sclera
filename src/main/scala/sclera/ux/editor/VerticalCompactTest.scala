@@ -18,8 +18,6 @@ object VerticalCompactTest extends SimpleSwingApplication {
       lazy val box = new javax.swing.Box(Orientation.Vertical.id)
 
       override lazy val peer = {
-//        val scroller = new javax.swing.JScrollPane(box)
-
         val panel = new javax.swing.JPanel with SuperMixin
         panel.setLayout(new BorderLayout)
         panel.add(box, BorderLayout.NORTH)
