@@ -1,7 +1,6 @@
 package sclera.ux.wrappers
 
-import swing.UIElement
-import javax.swing.{JLabel, JTextPane}
+import javax.swing.JTextPane
 import java.io.StringReader
 
 /**

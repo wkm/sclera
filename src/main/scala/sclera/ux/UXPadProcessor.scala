@@ -1,9 +1,7 @@
 package sclera.ux
 
 import actors.Actor._
-import sclera.util.Loggable
 import sclera.evaluator.Evaluator
-import actors.Actor
 import sclera.util.Loggable
 
 /**

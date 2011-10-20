@@ -1,9 +1,6 @@
 package sclera.ux
 
 import editor.UXEditorComponent
-import javax.swing.Box
-import swing._
-import sclera.format.color.SolarizedColorPalette
 import java.io.StringReader
 
 /**
@@ -20,6 +17,7 @@ class UXPadEntry(
   if(isInput) {
     val editor = new UXEditorComponent(this)
     editor.editorKit.read(new StringReader(content), editor.document, editor.document.getLength)
+
     contents += editor
     editorComponent = Some(editor)
   } else {

@@ -1,10 +1,8 @@
 package sclera.ux
 
 import sclera.sclera.format.TextFormat
-import swing.{Swing, Label}
-import java.awt.{Color, GraphicsEnvironment, Font}
-import sclera.format.color.SolarizedColorPalette
-
+import swing.Label
+import java.awt.Font
 class UXTextComponent(
     override val text:String,
     var textFormat : Option[TextFormat] = Option.empty

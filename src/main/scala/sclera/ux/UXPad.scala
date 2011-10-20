@@ -1,17 +1,11 @@
 package sclera.ux
 
 import swing._
-import event.{WindowDeactivated, WindowActivated, FocusGained}
-import javax.swing.border.EtchedBorder
-import wrappers.{JNestedTextComponent, NestedTextComponent}
-import javax.swing.{JLabel, JTextPane, JPanel, BorderFactory}
-import java.awt.{Dimension, BorderLayout, Color}
+import event.{WindowDeactivated, WindowActivated}
+import wrappers.NestedTextComponent
+import java.awt.Dimension
 import actors.Actor
-import actors.Actor._
 import sclera.util.Loggable
-import java.io.{StringWriter, StringReader}
-import sclera.evaluator.Evaluator
-
 /**
  * Represents a single Sclera pad/file
  */

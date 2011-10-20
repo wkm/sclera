@@ -2,20 +2,24 @@
 package sclera.ux.editor
 
 import javax.swing.text._
-import collection.immutable.{TreeMap, SortedMap}
+import collection.immutable.TreeMap
 import sclera.ux.wrappers.TextPaneComponent
 import sclera.format.color.SolarizedColorPalette
-import java.awt.{Dimension, Font, Graphics}
-import sclera.util.SwingKit
-import javax.swing.{JOptionPane, JTextPane}
-import swing.event.{Key, KeyTyped, KeyEvent}
 import java.awt.event.{FocusEvent, FocusListener}
-import sclera.ux.{UXPadEntry, UXPad, UX, UXObjectComponent}
+import sclera.ux.{UXPadEntry, UX}
 import java.io.StringWriter
+import sclera.util.{Loggable, SwingKit}
+import java.awt.{Dimension, Font, Graphics}
+import swing.event.{UIElementResized, Key, KeyTyped}
 
 class UXEditorComponent(
     val padEntry: UXPadEntry
-) extends TextPaneComponent {
+)
+  extends TextPaneComponent
+  with Loggable
+{
+
+  peer.setMaximumSize(new Dimension(Integer.MAX_VALUE, 15))
 
   /**
    * extract the text content from the text pane component
@@ -30,15 +34,36 @@ class UXEditorComponent(
   SwingKit.executeLater {
     editorKit =  new ScalaEditorKit()
     contentType = "text/scala"
-    font = new Font("Menlo", Font.BOLD, 12)
-    foreground = SolarizedColorPalette("black")
+    font = new Font("Menlo", Font.PLAIN, 12)
+    foreground = SolarizedColorPalette("base03")
 
     listenTo(keys)
     reactions += {
       // evaluation
-      case KeyTyped(_, text, Key.Modifier.Shift, _)
-        if text.toInt == 13 =>
+      case KeyTyped(_, text, Key.Modifier.Shift, _) if text.toInt == 13 =>
         UX.Processor ! UX.Evaluate()
+
+      case other =>
+        logger.debug("SIZE => {}", peer.getMinimumSize)
+        val minSizeHeight = peer.getMinimumSize
+        val height = peer.getHeight
+        logger.debug("MIN SIZE HEIGHT: {}; HEIGHT: {}", minSizeHeight, height)
+        peer.setMaximumSize(new Dimension(Integer.MAX_VALUE, height))
+//        peer.repaint()
+    }
+
+    listenTo(this)
+    reactions += {
+      case UIElementResized(element) =>
+        val currentHeight = peer.getHeight
+        val size = new Dimension(Integer.MAX_VALUE, currentHeight)
+
+        logger.debug("MIN SIZE: {}", peer.getMinimumSize)
+        logger.debug("MAX SIZE: {}", peer.getMaximumSize)
+
+//        peer.setMinimumSize(size)
+//        peer.setSize(size)
+//        peer.setMaximumSize(peer.getMinimumSize)
     }
 
     peer.addFocusListener(new FocusListener {
@@ -50,15 +75,13 @@ class UXEditorComponent(
         padEntry.pad.processor !? UX.LoseEntryFocus(padEntry)
       }
     })
-  } 
+  }
 }
 
 class ScalaEditorKit(
   val viewFactory: ScalaViewFactory = new ScalaViewFactory()
 ) extends StyledEditorKit {
   override def getContentType = "text/scala"
-
-  
 }
 
 class ScalaViewFactory extends ViewFactory {
