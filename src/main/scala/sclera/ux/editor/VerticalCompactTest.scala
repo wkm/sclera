@@ -1,10 +1,11 @@
 package sclera.ux.editor
 
-import javax.swing.JTextPane
 import swing._
 import java.io.StringReader
 import sclera.util.SwingKit
 import javax.swing.text.{StyledEditorKit, DefaultEditorKit}
+import javax.swing.{Box, JPanel, JTextPane}
+import java.awt.BorderLayout
 
 /**
  * sclera.ux.editor.VerticalCompactTest
@@ -13,10 +14,23 @@ import javax.swing.text.{StyledEditorKit, DefaultEditorKit}
 
 object VerticalCompactTest extends SimpleSwingApplication {
   def top = new MainFrame {
-    contents = new BoxPanel(Orientation.Vertical) {
-      contents += new Label("--- above ---")
+    contents = new Panel with SequentialContainer.Wrapper {
+      lazy val box = new javax.swing.Box(Orientation.Vertical.id)
+
+      override lazy val peer = {
+        val panel = new javax.swing.JPanel with SuperMixin
+        panel.setLayout(new BorderLayout)
+        panel.add(box, BorderLayout.NORTH)
+        panel
+      }
+
+      def add(component: Component) {
+        box.add(component.peer)
+      }
+
+      add( new Label("--- above ---") )
       
-      contents += new TextComponent {
+      add( new TextComponent {
         override lazy val peer: JTextPane = new JTextPane() with SuperMixin {
 
           setEditorKit(new StyledEditorKit())
@@ -29,9 +43,9 @@ object VerticalCompactTest extends SimpleSwingApplication {
             kit.read(reader, document, 0)
           }
         }
-      }
+      } )
 
-      contents += new Label("--- below ---")
+      add( new Label("--- below ---") )
     }
   }
 }
