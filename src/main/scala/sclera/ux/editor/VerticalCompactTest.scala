@@ -4,8 +4,8 @@ import swing._
 import java.io.StringReader
 import sclera.util.SwingKit
 import javax.swing.text.{StyledEditorKit, DefaultEditorKit}
-import javax.swing.{Box, JPanel, JTextPane}
 import java.awt.BorderLayout
+import javax.swing.{JScrollPane, Box, JPanel, JTextPane}
 
 /**
  * sclera.ux.editor.VerticalCompactTest
@@ -14,10 +14,12 @@ import java.awt.BorderLayout
 
 object VerticalCompactTest extends SimpleSwingApplication {
   def top = new MainFrame {
-    contents = new Panel with SequentialContainer.Wrapper {
+    contents = new ScrollPane(new Panel with SequentialContainer.Wrapper {
       lazy val box = new javax.swing.Box(Orientation.Vertical.id)
 
       override lazy val peer = {
+//        val scroller = new javax.swing.JScrollPane(box)
+
         val panel = new javax.swing.JPanel with SuperMixin
         panel.setLayout(new BorderLayout)
         panel.add(box, BorderLayout.NORTH)
@@ -46,6 +48,6 @@ object VerticalCompactTest extends SimpleSwingApplication {
       } )
 
       add( new Label("--- below ---") )
-    }
+    })
   }
 }
