@@ -18,9 +18,6 @@ class UXEditorComponent(
   extends TextPaneComponent
   with Loggable
 {
-
-  peer.setMaximumSize(new Dimension(Integer.MAX_VALUE, 15))
-
   /**
    * extract the text content from the text pane component
    */
@@ -42,28 +39,6 @@ class UXEditorComponent(
       // evaluation
       case KeyTyped(_, text, Key.Modifier.Shift, _) if text.toInt == 13 =>
         UX.Processor ! UX.Evaluate()
-
-      case other =>
-        logger.debug("SIZE => {}", peer.getMinimumSize)
-        val minSizeHeight = peer.getMinimumSize
-        val height = peer.getHeight
-        logger.debug("MIN SIZE HEIGHT: {}; HEIGHT: {}", minSizeHeight, height)
-        peer.setMaximumSize(new Dimension(Integer.MAX_VALUE, height))
-//        peer.repaint()
-    }
-
-    listenTo(this)
-    reactions += {
-      case UIElementResized(element) =>
-        val currentHeight = peer.getHeight
-        val size = new Dimension(Integer.MAX_VALUE, currentHeight)
-
-        logger.debug("MIN SIZE: {}", peer.getMinimumSize)
-        logger.debug("MAX SIZE: {}", peer.getMaximumSize)
-
-//        peer.setMinimumSize(size)
-//        peer.setSize(size)
-//        peer.setMaximumSize(peer.getMinimumSize)
     }
 
     peer.addFocusListener(new FocusListener {

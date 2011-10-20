@@ -11,8 +11,8 @@ import sclera.util.Loggable
  */
 class UXPad extends MainFrame with Loggable {
   var boxPanel = new NestedTextComponent {
-    contents += new UXPadEntry(UXPad.this, "12 + 13", isInput = true)
-    contents += new UXPadEntry(UXPad.this, "15")
+    add(new UXPadEntry(UXPad.this, "12 + 13", isInput = true))
+    add(new UXPadEntry(UXPad.this, "15"))
   }
 
   menuBar = new MenuBar() {

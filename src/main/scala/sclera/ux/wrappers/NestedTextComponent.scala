@@ -2,31 +2,31 @@ package sclera.ux.wrappers
 
 import swing._
 import sclera.format.color.SolarizedColorPalette
+import javax.swing.{JPanel, Box}
+import java.awt.BorderLayout
+
 /**
  * sclera.ux.wrappers.NestedTextComponent
  * wiktor - 2011
+ *
+ * The basic model is a JPanel with a BorderLayout containing a Box;
+ * generally nested within a ScrollPane. The key bit is that if we add
+ * JTextPane widgets to this component they're maximally wide but
+ * minimally tall
  */
 class NestedTextComponent
-  extends scala.swing.BoxPanel(Orientation.Vertical)
-//  with SequentialContainer.Wrapper
+  extends Panel
+  with SequentialContainer.Wrapper
 {
-//  override lazy val peer : JNestedTextComponent = {
-//    new JNestedTextComponent with SuperMixin
-//  }
-  peer.setBackground(SolarizedColorPalette("white"))
+  lazy val box = new javax.swing.Box(Orientation.Vertical.id)
+  override lazy val peer = {
+    val panel = new javax.swing.JPanel with SuperMixin
+    panel.setLayout(new BorderLayout)
+    panel.add(box, BorderLayout.NORTH)
+    panel
+  }
 
-  // we have to find and remove the existing component listeners to workaround
-  // type coercion to javax.swing.JComponent
-//  for(listener <- peer.getContainerListeners)
-//    peer.removeContainerListener(listener)
-
-
-  def selectedComponent: Option[java.awt.Component] = {
-//    val start = peer.getSelectionStart
-//    val end = peer.getSelectionEnd
-//
-//    val javaxComponent = peer.getComponentAt(start, end)
-//    Option(javaxComponent)
-    None
+  def add(component: Component) {
+    box.add(component.peer)
   }
 }
