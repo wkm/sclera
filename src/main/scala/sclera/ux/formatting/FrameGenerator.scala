@@ -48,7 +48,6 @@ extends Loggable
 
    private def generateOutsideBorder(style: FrameStyle) = {
      val thickness = style.frameThickness.get
-     logger.trace("THICKNESS: "+thickness)
 
      if(thickness.equalSided) {
        BorderFactory.createLineBorder(
