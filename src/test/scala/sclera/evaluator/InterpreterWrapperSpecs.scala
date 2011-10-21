@@ -8,7 +8,6 @@ import java.lang.Integer
  * sclera.evaluator.InterpreterWrapperSpecs
  * wiktor - 2011
  */
-
 object InterpreterWrapperSpecs extends Specification {
   "InterpreterWrapper" should {
     "Simple evaluation" in {

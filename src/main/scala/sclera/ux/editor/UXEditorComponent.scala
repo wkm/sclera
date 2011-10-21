@@ -20,7 +20,7 @@ class UXEditorComponent (
   with Loggable
 {
   /**
-   * extract the text content from the text pane component
+   * extract the text entryValue from the text pane component
    */
   def textContent: String = {
     val kit = editorKit

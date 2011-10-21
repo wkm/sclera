@@ -1,22 +1,33 @@
 package sclera.ux
 
 import editor.UXEditorComponent
-import formatting.{OutputFormatting, InputFormatting, BaseFormatting}
+import formatting._
 import java.io.StringReader
+import swing.Component
+import collection.mutable.Buffer
 
 /**
  * A representation of an individual input/output pair in a Sclera pad
  */
 abstract class UXPadEntry (
-    val content: UXObjectComponent,
+    val entryValue: UXObjectComponent,
     val style: UXPadEntryStyle = BaseFormatting
 )
   extends UXPadEntryGroup
 {
-  if(content != null)
-    contents += content
+  if(entryValue != null)
+    set(entryValue)
+
+  def set(component: Component) {
+    val container = FormattingContainerGenerator.generate(style)
+    container.add(component.peer)
+    peer.add(container)
+  }
   
   def willEvaluate = false;
+
+  def createContainer =
+    FrameGenerator.generate(style)
 };
 
 trait EntryEvaluates
@@ -38,7 +49,7 @@ class UXPadInputEntry (
   with EntryEvaluates
 {
   val editor = new UXEditorComponent(this)
-  contents += editor
+  set(editor)
 
   def entryContents =
     Some(editor.textContent)
