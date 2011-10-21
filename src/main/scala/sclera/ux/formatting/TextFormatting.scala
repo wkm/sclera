@@ -2,6 +2,7 @@ package sclera.ux.formatting
 
 import sclera.ux.{BoxSideValues, UXPadEntryStyle}
 import java.awt.Color
+import sclera.format.color.SolarizedColorPalette
 
 /**
  * sclera.ux.formatting.TextFormatting
@@ -27,6 +28,8 @@ extends BaseFormatting {
   fontSize = 12
 
   marginWidth = BoxSideValues[Int](10, 10, 0, 10)
+  frameColor = Some(SolarizedColorPalette("base2"))
+  frameThickness = Some(BoxSideValues[Int](1, 0))
 }
 object InputFormatting extends InputFormatting
 
