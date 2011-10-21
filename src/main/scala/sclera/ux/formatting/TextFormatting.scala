@@ -30,6 +30,7 @@ extends BaseFormatting {
   marginWidth = BoxSideValues[Int](10, 10, 0, 10)
   frameColor = Some(SolarizedColorPalette("base2"))
   frameThickness = Some(BoxSideValues[Int](1, 0))
+  framePadding = Some(BoxSideValues[Int](5))
 }
 object InputFormatting extends InputFormatting
 
