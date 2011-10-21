@@ -38,15 +38,29 @@ trait MarginStyle {
   var marginWidth: BoxSideValues[Int]
 }
 
-case class BoxSideValues[A](
+case class BoxSideValues[A] (
     val top: A,
     val right: A,
     val bottom: A,
     val left: A
 ) {
-  def apply(value: A) : BoxSideValues[A] =
-    apply(value, value)
+  def equalSided =
+    top == right &&
+    right == bottom &&
+    bottom == left
 
-  def apply(vertical: A, horizontal: A): BoxSideValues[A] =
+  def equalVerticals =
+    top == bottom
+
+  def equalHorizontals =
+    left == right
+}
+
+object BoxSideValues
+{
+  def apply[A](value: A) : BoxSideValues[A] =
+    apply[A](value, value)
+
+  def apply[A](vertical: A, horizontal: A): BoxSideValues[A] =
     BoxSideValues[A](vertical, horizontal, vertical, horizontal)
 }
