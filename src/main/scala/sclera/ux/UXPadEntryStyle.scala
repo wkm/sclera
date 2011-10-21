@@ -45,7 +45,7 @@ case class BoxSideValues[A] (
     val bottom: A,
     val left: A
 ) {
-  def equalSided =
+  def equalSides =
     top == right &&
     right == bottom &&
     bottom == left

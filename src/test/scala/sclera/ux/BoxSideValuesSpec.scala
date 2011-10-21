@@ -19,7 +19,7 @@ object BoxSideValuesSpec extends Specification {
 
       sides.equalHorizontals mustBe true
       sides.equalVerticals mustBe true
-      sides.equalSided mustBe true
+      sides.equalSides mustBe true
     }
 
     "verticals and horizontals" in {
@@ -32,7 +32,7 @@ object BoxSideValuesSpec extends Specification {
 
       sides.equalHorizontals mustBe true
       sides.equalVerticals mustBe true
-      sides.equalSided mustBe false
+      sides.equalSides mustBe false
     }
 
     "each side different" in {
@@ -44,7 +44,7 @@ object BoxSideValuesSpec extends Specification {
 
       sides.equalHorizontals mustBe false
       sides.equalVerticals mustBe false
-      sides.equalSided mustBe false
+      sides.equalSides mustBe false
     }
   }
 }

@@ -49,7 +49,7 @@ extends Loggable
    private def generateOutsideBorder(style: FrameStyle) = {
      val thickness = style.frameThickness.get
 
-     if(thickness.equalSided) {
+     if(thickness.equalSides) {
        BorderFactory.createLineBorder(
          style.frameColor.get,
          thickness.top
