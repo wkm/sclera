@@ -6,27 +6,46 @@ import java.io.StringReader
 /**
  * A representation of an individual input/output pair in a Sclera pad
  */
-class UXPadEntry(
-  val pad: UXPad,
-  val content: String = "",
-  val isInput: Boolean = false
-) extends UXPadEntryGroup {
+abstract class UXPadEntry (
+    val content: UXObjectComponent
+)
+  extends UXPadEntryGroup
+{
+  if(content != null)
+    contents += content
+  
+  def willEvaluate = false;
+};
 
-  private var editorComponent : Option[UXEditorComponent] = None
+trait EntryEvaluates
+  extends UXPadEntry
+{
+  override
+  def willEvaluate = true;
 
-  if(isInput) {
-    val editor = new UXEditorComponent(this)
-    editor.editorKit.read(new StringReader(content), editor.document, editor.document.getLength)
+  def entryContents: Option[String];
+}
 
-    contents += editor
-    editorComponent = Some(editor)
-  } else {
-    contents += new UXTextComponent(text = "Out: "+content)
-  }
+/**
+ * An "input" entry: a structured text editor for inputting scala
+ */
+class UXPadInputEntry (
+    val pad: UXPad
+)
+  extends UXPadEntry(null)
+  with EntryEvaluates
+{
+  val editor = new UXEditorComponent(this)
+  contents += editor
 
   def entryContents =
-    if(editorComponent.isDefined)
-      Some(editorComponent.get.textContent)
-    else
-      None
-};
+    Some(editor.textContent)
+}
+
+/**
+ * An "output" entry: a highly formatted, nested output type
+ */
+class UXPadOutputEntry (
+    val text: String
+)
+  extends UXPadEntry(new UXTextComponent("Out: "+text));

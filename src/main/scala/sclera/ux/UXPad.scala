@@ -6,13 +6,15 @@ import wrappers.NestedTextComponent
 import java.awt.Dimension
 import actors.Actor
 import sclera.util.Loggable
+import sclera.format.color.SolarizedColorPalette
+
 /**
  * Represents a single Sclera pad/file
  */
 class UXPad extends MainFrame with Loggable {
   var boxPanel = new NestedTextComponent {
-    add(new UXPadEntry(UXPad.this, "12 + 13", isInput = true))
-    add(new UXPadEntry(UXPad.this, "15"))
+    add(new UXPadInputEntry(UXPad.this))
+    add(new UXPadOutputEntry("12"))
   }
 
   menuBar = new MenuBar() {
@@ -32,6 +34,7 @@ class UXPad extends MainFrame with Loggable {
     contents = boxPanel
   }
   size = new Dimension(400, 500)
+  background = SolarizedColorPalette("white")
 
   listenTo(this)
   reactions += {
@@ -47,4 +50,9 @@ class UXPad extends MainFrame with Loggable {
   }
 
   val processor: Actor = new UXPadProcessor(this).processor
+
+  def insertEntry(entry: UXPadEntry) {
+    boxPanel.add(entry)
+    boxPanel.revalidate()
+  }
 }

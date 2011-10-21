@@ -6,16 +6,17 @@ import collection.immutable.TreeMap
 import sclera.ux.wrappers.TextPaneComponent
 import sclera.format.color.SolarizedColorPalette
 import java.awt.event.{FocusEvent, FocusListener}
-import sclera.ux.{UXPadEntry, UX}
 import java.io.StringWriter
 import sclera.util.{Loggable, SwingKit}
 import java.awt.{Dimension, Font, Graphics}
 import swing.event.{UIElementResized, Key, KeyTyped}
+import sclera.ux.{UXPadInputEntry, UXObjectComponent, UXPadEntry, UX}
 
-class UXEditorComponent(
-    val padEntry: UXPadEntry
+class UXEditorComponent (
+    val padEntry: UXPadInputEntry
 )
   extends TextPaneComponent
+  with UXObjectComponent
   with Loggable
 {
   /**
@@ -53,19 +54,24 @@ class UXEditorComponent(
   }
 }
 
-class ScalaEditorKit(
-  val viewFactory: ScalaViewFactory = new ScalaViewFactory()
-) extends StyledEditorKit {
+class ScalaEditorKit (
+    val viewFactory: ScalaViewFactory = new ScalaViewFactory()
+)
+  extends StyledEditorKit
+{
   override def getContentType = "text/scala"
 }
 
-class ScalaViewFactory extends ViewFactory {
+class ScalaViewFactory
+  extends ViewFactory
+{
   override def create(element: Element) =
     new ScalaView(element)
 }
 
 class ScalaView(val element: Element)
-  extends PlainView(element) {
+  extends PlainView(element)
+{
 
   getDocument.putProperty(PlainDocument.tabSizeAttribute, 4)
 
@@ -87,7 +93,10 @@ class ScalaView(val element: Element)
   }
 }
 
-class AnnotatedSource(text: String) {
+class AnnotatedSource (
+    val text: String
+)
+{
   val annotationMap = new TreeMap[Tuple2[Int, Int], String]()
 
   def addAnnotation(start:Int, end:Int) {

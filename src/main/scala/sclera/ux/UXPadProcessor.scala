@@ -34,13 +34,21 @@ class UXPadProcessor (
           logger.trace("UX.Evaluate")
           if(focusedEntry.isDefined) {
             val entry = focusedEntry.get
-            Evaluator.Processor ! Evaluator.Evaluate(entry.entryContents.get)
+            entry match {
+              case input: UXPadInputEntry =>
+                Evaluator.Processor ! Evaluator.Evaluate(input.entryContents.get)
+
+              case _ =>
+                logger.error("Cannot execute non-input entry")
+            }
           } else
             logger.trace("\tno entry in focus")
 
         case Evaluator.Result(value) =>
           logger.trace("Evaluator.Result")
           logger.trace("\t=> {}", value)
+
+          pad.insertEntry(new UXPadOutputEntry(value.toString))
         }
       }
     }
