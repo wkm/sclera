@@ -29,6 +29,7 @@ trait FrameStyle {
   var frameColor: Option[Color]
   var frameThickness: Option[BoxSideValues[Int]]
   var framePadding: Option[BoxSideValues[Int]]
+  var frameRounding: Option[BoxCornerValues[Int]]
 }
 
 /**
@@ -63,4 +64,36 @@ object BoxSideValues
 
   def apply[A](vertical: A, horizontal: A): BoxSideValues[A] =
     BoxSideValues[A](vertical, horizontal, vertical, horizontal)
+}
+
+case class BoxCornerValues[A] (
+    val upperLeft: A,
+    val upperRight: A,
+    val lowerRight: A,
+    val lowerLeft: A
+) {
+  def equalCorners =
+    upperLeft == upperRight &&
+    upperRight == lowerRight &&
+    lowerRight == lowerLeft
+
+  def equalUppers =
+    upperLeft == upperRight
+
+  def equalLefts =
+    upperLeft == lowerLeft
+
+  def equalRights =
+    upperRight == lowerRight
+
+  def equalLowers =
+    lowerLeft == lowerRight
+}
+
+object BoxCornerValues {
+  def apply[A](value: A) : BoxCornerValues[A] =
+    apply[A](value, value)
+
+  def apply[A](lefts: A, rights: A) =
+    BoxCornerValues[A](lefts, rights, rights, lefts)
 }
