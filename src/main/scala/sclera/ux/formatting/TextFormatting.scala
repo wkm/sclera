@@ -19,16 +19,19 @@ extends UXPadEntryStyle {
 
   var marginWidth = BoxSideValues[Int](5, 10, 2, 10)
 }
+object BaseFormatting extends BaseFormatting
 
 class InputFormatting
 extends BaseFormatting {
-  var fontFamily = "Menlo"
-  var fontSize = 12
+  fontFamily = "Menlo"
+  fontSize = 12
 
-  var marginWidth = BoxSideValues[Int](10, 10, 0, 10)
+  marginWidth = BoxSideValues[Int](10, 10, 0, 10)
 }
+object InputFormatting extends InputFormatting
 
 class OutputFormatting
 extends BaseFormatting {
-  var marginWidth = BoxSideValues[Int](0, 10, 2, 10)
+  marginWidth = BoxSideValues[Int](0, 10, 2, 10)
 }
+object OutputFormatting extends OutputFormatting

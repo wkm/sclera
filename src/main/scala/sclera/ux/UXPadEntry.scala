@@ -1,13 +1,15 @@
 package sclera.ux
 
 import editor.UXEditorComponent
+import formatting.{OutputFormatting, InputFormatting, BaseFormatting}
 import java.io.StringReader
 
 /**
  * A representation of an individual input/output pair in a Sclera pad
  */
 abstract class UXPadEntry (
-    val content: UXObjectComponent
+    val content: UXObjectComponent,
+    val style: UXPadEntryStyle = BaseFormatting
 )
   extends UXPadEntryGroup
 {
@@ -32,7 +34,7 @@ trait EntryEvaluates
 class UXPadInputEntry (
     val pad: UXPad
 )
-  extends UXPadEntry(null)
+  extends UXPadEntry(null, InputFormatting)
   with EntryEvaluates
 {
   val editor = new UXEditorComponent(this)
@@ -48,4 +50,7 @@ class UXPadInputEntry (
 class UXPadOutputEntry (
     val text: String
 )
-  extends UXPadEntry(new UXTextComponent("Out: "+text));
+  extends UXPadEntry(
+    new UXTextComponent("Out: "+text),
+    OutputFormatting
+  );
