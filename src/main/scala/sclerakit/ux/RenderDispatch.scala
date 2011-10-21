@@ -10,6 +10,8 @@ import sclera.util.Loggable
 object RenderDispatch
 extends Loggable
 {
+  def apply(obj: Any) = dispatch(obj)
+
   /**
    * dispatch will continually apply rendering rules to the object
    * until finally an object with trait WillRender is returned

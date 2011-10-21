@@ -64,9 +64,7 @@ class UXPadOutputEntry (
 )
   extends UXPadEntry(null, OutputFormatting)
 {
-  val willRender = RenderDispatch.dispatch(value)
+  val willRender = RenderDispatch(value)
   val rendered = willRender.render
-  println("RENDERED: "+willRender)
-  println("RENDERED OBJECT: "+rendered)
   set(rendered)
 }
