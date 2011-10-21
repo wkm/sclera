@@ -8,7 +8,7 @@ class UXTextComponent(
     var textFormat : Option[TextFormat] = Option.empty
 )
   extends Label(text)
-  with UXObjectComponent
+  with UXComponent
 {
-  font = new Font("Helvetica", Font.PLAIN, 11);
+  font = new Font("Helvetica", Font.PLAIN, 12);
 }

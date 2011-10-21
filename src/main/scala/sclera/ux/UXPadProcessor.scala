@@ -48,7 +48,7 @@ class UXPadProcessor (
           logger.trace("Evaluator.Result")
           logger.trace("\t=> {}", value)
 
-          pad.insertEntry(new UXPadOutputEntry(value.toString))
+          pad.insertEntry(new UXPadOutputEntry(value))
         }
       }
     }

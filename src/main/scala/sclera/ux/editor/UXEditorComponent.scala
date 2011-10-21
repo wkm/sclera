@@ -10,13 +10,13 @@ import java.io.StringWriter
 import sclera.util.{Loggable, SwingKit}
 import java.awt.{Dimension, Font, Graphics}
 import swing.event.{UIElementResized, Key, KeyTyped}
-import sclera.ux.{UXPadInputEntry, UXObjectComponent, UXPadEntry, UX}
+import sclera.ux.{UXPadInputEntry, UXComponent, UXPadEntry, UX}
 
 class UXEditorComponent (
     val padEntry: UXPadInputEntry
 )
   extends TextPaneComponent
-  with UXObjectComponent
+  with UXComponent
   with Loggable
 {
   /**

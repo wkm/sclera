@@ -5,12 +5,13 @@ import formatting._
 import java.io.StringReader
 import swing.Component
 import collection.mutable.Buffer
+import sclerakit.ux.RenderDispatch
 
 /**
  * A representation of an individual input/output pair in a Sclera pad
  */
 abstract class UXPadEntry (
-    val entryValue: UXObjectComponent,
+    val entryValue: UXComponent,
     val style: UXPadEntryStyle = BaseFormatting
 )
   extends UXPadEntryGroup
@@ -59,9 +60,13 @@ class UXPadInputEntry (
  * An "output" entry: a highly formatted, nested output type
  */
 class UXPadOutputEntry (
-    val text: String
+    val value: Any
 )
-  extends UXPadEntry(
-    new UXTextComponent("Out: "+text),
-    OutputFormatting
-  );
+  extends UXPadEntry(null, OutputFormatting)
+{
+  val willRender = RenderDispatch.dispatch(value)
+  val rendered = willRender.render
+  println("RENDERED: "+willRender)
+  println("RENDERED OBJECT: "+rendered)
+  set(rendered)
+}
