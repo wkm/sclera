@@ -31,6 +31,13 @@ abstract class UXPadEntry (
     FrameGenerator.generate(style)
 };
 
+object UXPadEntry {
+  def apply(value: Any) =
+    new UXPadEntry(null) {
+      set(RenderDispatch(value).render)
+    }
+}
+
 trait EntryEvaluates
   extends UXPadEntry
 {
