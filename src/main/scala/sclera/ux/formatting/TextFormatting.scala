@@ -1,8 +1,8 @@
 package sclera.ux.formatting
 
-import sclera.ux.{BoxSideValues, UXPadEntryStyle}
 import java.awt.Color
 import sclera.format.color.SolarizedColorPalette
+import sclera.ux.{BoxCornerValues, BoxSideValues, UXPadEntryStyle}
 
 /**
  * sclera.ux.formatting.TextFormatting
@@ -17,6 +17,7 @@ extends UXPadEntryStyle {
   var frameColor: Option[Color] = None
   var frameThickness: Option[BoxSideValues[Int]] = None
   var framePadding: Option[BoxSideValues[Int]] = None
+  var frameRounding: Option[BoxCornerValues[Int]] = None
 
   var marginWidth = BoxSideValues[Int](5, 10, 2, 10)
 }

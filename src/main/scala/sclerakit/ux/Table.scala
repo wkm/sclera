@@ -7,13 +7,7 @@ import swing.{Button, Label, GridBagPanel}
  * wiktor - 2011
  */
 
-object Table
-{
-  def apply(cells: List[List[Any]]): Table =
-    new Table(cells)
-}
-
-class Table (
+case class Table (
   var cells: List[List[Any]] = null
 )
   extends WillRender
@@ -32,6 +26,9 @@ class Table (
 
           c.gridx = x
           c.gridy = y
+          c.anchor = GridBagPanel.Anchor.West
+          c.ipadx = 5
+          c.ipady = 1
 
           layout(RenderDispatch(cell).render) = c
         }

@@ -1,6 +1,6 @@
 package sclera.ux
 
-import java.awt.Color
+import java.awt.{Insets, Color}
 
 /**
  * sclera.ux.UXPadEntryStyle
@@ -95,5 +95,5 @@ object BoxCornerValues {
     apply[A](value, value)
 
   def apply[A](lefts: A, rights: A) =
-    BoxCornerValues[A](lefts, rights, rights, lefts)
+    new BoxCornerValues[A](lefts, rights, rights, lefts)
 }

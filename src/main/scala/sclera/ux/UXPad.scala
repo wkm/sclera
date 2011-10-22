@@ -8,7 +8,7 @@ import sclera.util.Loggable
 import sclera.format.color.SolarizedColorPalette
 import swing._
 import event.{WindowDeactivated, WindowActivated}
-import sclerakit.ux.{Table, RenderDispatch}
+import sclerakit.ux.{Border, Table, RenderDispatch}
 
 /**
  * Represents a single Sclera pad/file
@@ -17,13 +17,13 @@ class UXPad extends MainFrame with Loggable {
   var boxPanel = new NestedTextComponent {
     add(new UXPadInputEntry(UXPad.this))
     add(UXPadEntry(
-      Table(
+      Border(Table(
         List(
           List(new java.util.Date, 2, 3),
           List("a", "b", 3123)
         )
       )
-    ))
+    )))
   }
 
   menuBar = new MenuBar() {
