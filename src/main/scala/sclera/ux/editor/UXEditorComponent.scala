@@ -32,8 +32,8 @@ class UXEditorComponent (
   SwingKit.executeLater {
     editorKit =  new ScalaEditorKit()
     contentType = "text/scala"
-    font = new Font("Menlo", Font.PLAIN, 12)
-    foreground = SolarizedColorPalette("base03")
+    font = new Font("Menlo", Font.BOLD, 12)
+    foreground = SolarizedColorPalette("black")
 
     listenTo(keys)
     reactions += {
