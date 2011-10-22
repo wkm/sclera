@@ -35,8 +35,10 @@ extends Loggable
 
   def internalDispatch(obj: Any): Any = {
     logger.trace("I-DISPATCH ON: {}", obj)
+
     obj match {
       // trivial cases
+      case _ if obj == null => SimpleStyledText("(null)")
       case r: WillRender => r
       case s: String => SimpleStyledText(s)
 
