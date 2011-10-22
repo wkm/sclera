@@ -2,8 +2,11 @@ package sclera.ux.formatting
 
 import javax.swing.border.Border
 import javax.swing.BorderFactory
-import sclera.ux.{BoxSideValues, FrameStyle}
 import sclera.util.Loggable
+import sclera.ux.BoxCornerValues._
+import sclera.ux.ext.RoundedBorder
+import sclera.format.color.SolarizedColorPalette
+import sclera.ux.{BoxCornerValues, BoxSideValues, FrameStyle}
 
 /**
  * sclera.ux.formatting.FrameGenerator
@@ -18,49 +21,29 @@ object FrameGenerator
 extends Loggable
 {
   def generate(style: FrameStyle) : Border = {
-    var padding:Option[Border] = None
-    if(style.framePadding.isDefined)
-      padding = Some(generatePaddingBorder(style.framePadding.get))
+    val color = style.frameColor.getOrElse(SolarizedColorPalette("black"))
+    val thickness = style.frameThickness.getOrElse(BoxSideValues(1))
+    val padding = style.framePadding.getOrElse(BoxSideValues(0))
+    val rounding = style.frameRounding.getOrElse(BoxCornerValues(0))
+    val showFrameCorners = style.showFrameCorners.getOrElse(BoxCornerValues(true))
+    val showFrameSides = style.showFrameSides.getOrElse(BoxSideValues(true))
 
-    var outside:Option[Border] = None
-    if(style.frameColor.isDefined)
-      outside = Some(generateOutsideBorder(style))
+    val cornerThickness = BoxCornerValues(
+      (thickness.left+thickness.top)/2,
+      (thickness.top+thickness.right)/2,
+      (thickness.right+thickness.bottom)/2,
+      (thickness.bottom+thickness.left)/2
+    )
 
-    if(padding.isDefined && outside.isDefined)
-      return BorderFactory.createCompoundBorder(outside.get, padding.get)
-
-    if(padding.isDefined)
-      return padding.get
-
-    if(outside.isDefined)
-      return outside.get
-    else
-      return BorderFactory.createEmptyBorder()
+    new RoundedBorder(
+      BoxSideValues(color),
+      BoxCornerValues(color),
+      thickness,
+      cornerThickness,
+      rounding,
+      showFrameSides,
+      showFrameCorners,
+      padding
+    )
   }
-
-   private def generatePaddingBorder(thickness: BoxSideValues[Int]) =
-     BorderFactory.createEmptyBorder(
-       thickness.top,
-       thickness.left,
-       thickness.bottom,
-       thickness.right
-     )
-
-   private def generateOutsideBorder(style: FrameStyle) = {
-     val thickness = style.frameThickness.get
-
-     if(thickness.equalSides) {
-       BorderFactory.createLineBorder(
-         style.frameColor.get,
-         thickness.top
-       )
-     } else
-       BorderFactory.createMatteBorder(
-         thickness.top,
-         thickness.left,
-         thickness.bottom,
-         thickness.right,
-         style.frameColor.get
-       )
-   }
 }

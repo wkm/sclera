@@ -2,8 +2,8 @@ package sclera.ux.wrappers
 
 import swing._
 import sclera.format.color.SolarizedColorPalette
-import javax.swing.{JPanel, Box}
 import java.awt.BorderLayout
+import javax.swing.{BorderFactory, JPanel, Box}
 
 /**
  * sclera.ux.wrappers.NestedTextComponent
@@ -23,6 +23,7 @@ class NestedTextComponent
     val panel = new javax.swing.JPanel with SuperMixin
     panel.setLayout(new BorderLayout)
     panel.add(box, BorderLayout.NORTH)
+    panel.setBorder(BorderFactory.createEmptyBorder())
     panel
   }
 

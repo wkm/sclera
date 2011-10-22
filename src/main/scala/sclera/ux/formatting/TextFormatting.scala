@@ -18,6 +18,8 @@ extends UXPadEntryStyle {
   var frameThickness: Option[BoxSideValues[Int]] = None
   var framePadding: Option[BoxSideValues[Int]] = None
   var frameRounding: Option[BoxCornerValues[Int]] = None
+  var showFrameCorners: Option[BoxCornerValues[Boolean]] = Some(BoxCornerValues(false))
+  var showFrameSides: Option[BoxSideValues[Boolean]] = Some(BoxSideValues(false))
 
   var marginWidth = BoxSideValues[Int](5, 10, 2, 10)
 }
@@ -29,9 +31,12 @@ extends BaseFormatting {
   fontSize = 12
 
   marginWidth = BoxSideValues[Int](20, 32, 0, 32)
-  frameColor = Some(SolarizedColorPalette("base2"))
-  frameThickness = Some(BoxSideValues[Int](1, 0))
-  framePadding = Some(BoxSideValues[Int](2, 0))
+  frameColor = Some(SolarizedColorPalette("blue"))
+  frameThickness = Some(BoxSideValues[Int](1))
+  framePadding = None
+  frameRounding = Some(BoxCornerValues(3, 0))
+  showFrameSides = Some(BoxSideValues(false, false, false, true))
+  showFrameCorners = Some(BoxCornerValues(true, false, false, true))
 }
 object InputFormatting extends InputFormatting
 
@@ -40,3 +45,11 @@ extends BaseFormatting {
   marginWidth = BoxSideValues[Int](0, 32, 2, 32)
 }
 object OutputFormatting extends OutputFormatting
+
+
+class BaseBorderFormatting
+  extends BaseFormatting
+{
+  showFrameSides = Some(BoxSideValues(true))
+}
+object BaseBorderFormatting extends BaseBorderFormatting

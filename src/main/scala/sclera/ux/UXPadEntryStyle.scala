@@ -30,6 +30,8 @@ trait FrameStyle {
   var frameThickness: Option[BoxSideValues[Int]]
   var framePadding: Option[BoxSideValues[Int]]
   var frameRounding: Option[BoxCornerValues[Int]]
+  var showFrameCorners: Option[BoxCornerValues[Boolean]]
+  var showFrameSides: Option[BoxSideValues[Boolean]]
 }
 
 /**

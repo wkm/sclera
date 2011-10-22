@@ -5,6 +5,7 @@ import sclera.format.color.SolarizedColorPalette
 import swing.{Component, Orientation}
 import sclera.ux.ext.RoundedBorder
 import sclera.ux.{BoxCornerValues, BoxSideValues, FrameStyle}
+import sclera.ux.formatting.{BaseBorderFormatting, FrameGenerator, BaseFormatting}
 
 /**
  * sclerakit.ux.Border
@@ -13,22 +14,12 @@ import sclera.ux.{BoxCornerValues, BoxSideValues, FrameStyle}
 
 case class Border (
     val obj: Any,
-    val settings: FrameStyle = null
+    val style: FrameStyle = BaseBorderFormatting
 )
   extends WillRender
 {
   def render = {
-    val border = new RoundedBorder(
-      BoxSideValues(SolarizedColorPalette("blue")),
-      BoxCornerValues(SolarizedColorPalette("blue")),
-      BoxSideValues(2),
-      BoxCornerValues(2),
-      BoxCornerValues(5, 30, 8, 15),
-      BoxSideValues(true),
-      BoxCornerValues(true),
-      BoxSideValues(3)
-    )
-    
+    val border = FrameGenerator.generate(style)
     val layout = new Box(Orientation.Vertical.id)
     layout.setBorder(border)
     layout.add(RenderDispatch(obj).render.peer)

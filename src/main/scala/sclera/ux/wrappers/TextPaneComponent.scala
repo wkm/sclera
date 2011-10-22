@@ -9,17 +9,7 @@ import javax.swing.text.{Document, EditorKit}
  * for the EditorPane container that wraps JEditorPane
  */
 class TextPaneComponent extends TextComponent {
-  override lazy val peer: JTextPane = new JTextPane() with SuperMixin /*{
-    override
-    def getScrollableTracksViewportWidth() = {
-      true
-    }
-
-    override
-    def getScrollableTracksViewportHeight() = {
-      true
-    }
-  }*/
+  override lazy val peer: JTextPane = new JTextPane() with SuperMixin
 
   def contentType: String = peer.getContentType
   def contentType_=(t: String) = peer.setContentType(t)
