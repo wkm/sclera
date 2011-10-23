@@ -31,7 +31,7 @@ extends BaseFormatting {
   fontSize = 12
 
   marginWidth = BoxSideValues[Int](20, 32, 0, 32)
-  frameColor = Some(SolarizedColorPalette("blue"))
+  frameColor = Some(SolarizedColorPalette("base1"))
   frameThickness = Some(BoxSideValues[Int](1))
   framePadding = None
   frameRounding = Some(BoxCornerValues(3, 0))

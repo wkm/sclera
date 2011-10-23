@@ -18,6 +18,7 @@ class UXPad extends MainFrame with Loggable {
   var boxPanel = new NestedTextComponent {
     add(new UXPadInputEntry(UXPad.this))
     add(new UXPadInputEntry(UXPad.this))
+    add(new UXPadOutputEntry(Border("m")))
   }
 
   menuBar = new MenuBar() {
@@ -43,12 +44,10 @@ class UXPad extends MainFrame with Loggable {
   listenTo(this)
   reactions += {
     case WindowActivated(source) =>
-      logger.trace("WindowActivated")
       if(source == peer)
         UX.Processor !? UX.Focus(this)
 
     case WindowDeactivated(source) =>
-      logger.trace("WindowDeactivated")
       if(source == peer)
         UX.Processor !? UX.LostFocus(this)
   }

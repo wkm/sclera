@@ -11,7 +11,7 @@ import javax.swing.{BorderFactory, JPanel, Box}
  *
  * The basic model is a JPanel with a BorderLayout containing a Box;
  * generally nested within a ScrollPane. The key bit is that if we add
- * JTextPane widgets to this component they're maximally wide but
+ * JTextPane widgets to this fragment they're maximally wide but
  * minimally tall
  */
 class NestedTextComponent

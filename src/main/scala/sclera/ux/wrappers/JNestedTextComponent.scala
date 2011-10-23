@@ -7,7 +7,7 @@ import java.io.StringReader
  * sclera.ux.wrappers.JNestedTextComponent
  * wiktor - 2011
  *
- * A component built basically to vertically layout
+ * A fragment built basically to vertically layout
  * TextPaneComponents which are as vertically compact as possible
  */
 class JNestedTextComponent extends JTextPane {

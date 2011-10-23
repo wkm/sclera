@@ -11,6 +11,8 @@ import sclera.util.{Loggable, SwingKit}
 import java.awt.{Dimension, Font, Graphics}
 import swing.event.{UIElementResized, Key, KeyTyped}
 import sclera.ux.{UXPadInputEntry, UXComponent, UXPadEntry, UX}
+import reflect.BeanProperty
+import java.nio.channels.ServerSocketChannel
 
 class UXEditorComponent (
     val padEntry: UXPadInputEntry
@@ -20,7 +22,7 @@ class UXEditorComponent (
   with Loggable
 {
   /**
-   * extract the text entryValue from the text pane component
+   * extract the text entryValue from the text pane fragment
    */
   def textContent: String = {
     val kit = editorKit
@@ -30,7 +32,7 @@ class UXEditorComponent (
   }
 
   SwingKit.executeLater {
-    editorKit =  new ScalaEditorKit()
+    editorKit = new ScalaEditorKit()
     contentType = "text/scala"
     font = new Font("Cousine", Font.BOLD, 12)
     foreground = SolarizedColorPalette("black")
@@ -55,11 +57,14 @@ class UXEditorComponent (
 }
 
 class ScalaEditorKit (
-    val viewFactory: ScalaViewFactory = new ScalaViewFactory()
+    val viewFactory: ScalaViewFactory = new ScalaViewFactory(),
+    val contentType: String  = "text/scala"
 )
   extends StyledEditorKit
 {
-  override def getContentType = "text/scala"
+  // cannot use @BeanProperty because we need `override`
+  override def getViewFactory = viewFactory
+  override def getContentType = contentType
 }
 
 class ScalaViewFactory
@@ -72,34 +77,51 @@ class ScalaViewFactory
 class ScalaView(val element: Element)
   extends PlainView(element)
 {
-
-  getDocument.putProperty(PlainDocument.tabSizeAttribute, 4)
+  getDocument.putProperty(PlainDocument.tabSizeAttribute, 2)
 
   override protected
   def drawUnselectedText(graphics: Graphics, x: Int, y: Int, p0: Int, p1: Int): Int = {
     val doc = getDocument
     val text = doc.getText(p0, p1 - p0)
-
+    var finalX = x
     val segment = getLineBuffer
 
-    val annotatedSource = new AnnotatedSource(text)
+    def drawFragment(start: Int, stop: Int, segment: Segment) {
+      if(start == stop) return;
 
-    val matches = UXEditorScalaKeywords.keywordRegexp.findAllIn(text)
-    matches.matchData.foreach({ textmatch =>
-      annotatedSource.addAnnotation(textmatch.start(0), textmatch.end(0))
-    })
+      doc.getText(start, stop-start, segment)
+      finalX = Utilities.drawTabbedText(segment, finalX, y, graphics, this, 0);
+    }
 
-    return x
+    var lastIndex = 0
+    for(fragment <- ScalaSourceHighlighter.highlight(text)) {
+      graphics.setColor(colorForComponent(ScalaSourceComponent.Plain))
+      drawFragment(lastIndex, fragment.start, segment)
+
+      graphics.setColor(colorForComponent(fragment.component))
+      drawFragment(fragment.start, fragment.end, segment)
+
+      lastIndex = fragment.end
+    }
+
+    if(lastIndex != text.length) {
+      graphics.setColor(colorForComponent(ScalaSourceComponent.Plain))
+      drawFragment(lastIndex, text.length, segment)
+    }
+
+    graphics.setColor(SolarizedColorPalette("black"))
+    doc.getText(p0, p1 - p0, segment)
+
+    return finalX
   }
-}
 
-class AnnotatedSource (
-    val text: String
-)
-{
-  val annotationMap = new TreeMap[Tuple2[Int, Int], String]()
-
-  def addAnnotation(start:Int, end:Int) {
-    
+  private def colorForComponent(component: ScalaSourceComponent.ScalaSourceComponent) = {
+    import ScalaSourceComponent._
+    SolarizedColorPalette(component match {
+      case Plain => "black"
+      case Keyword => "red"
+      case String => "green"
+      case Comment => "base02"
+    })
   }
 }
