@@ -1,6 +1,7 @@
 package sclera.algo
 
 import org.specs.Specification
+import collection.immutable.WrappedString
 
 /**
  * sclera.algo.SplittableIntervalMappingSpecs
@@ -49,6 +50,48 @@ class SplittableIntervalMappingSpecs extends Specification {
       Interval(2,4) >= Interval(1,3) mustBe true
 
       Interval(1,2) > Interval(3,4) mustBe false
+    }
+  }
+
+  "SplittableIntervalMapping" should {
+    "start with an empty mapping" in {
+      SplittableIntervalMapping[String].intervals must haveSize(0)
+    }
+
+    "have the initial interval" in {
+      val mapping = SplittableIntervalMapping[String]
+      mapping.addInterval((1, 10), "A")
+
+      mapping.intervals must haveSize(1)
+      mapping.intervals must haveTheSameElementsAs(
+        List(
+          (Interval(1, 10), "A")
+        )
+      )
+    }
+
+    "accept new intervals" in {
+      val mapping = SplittableIntervalMapping[String]
+      mapping.addInterval((20, 30), "A")
+      mapping.addInterval((40, 50), "B")
+
+      mapping.intervals must haveSize(2)
+      mapping.intervals must haveTheSameElementsAs(
+        List(
+          (Interval(20, 30), "A"),
+          (Interval(40, 50), "B")
+        )
+      )
+
+      mapping.addInterval((0, 10), "C")
+      mapping.intervals must haveSize(3)
+      mapping.intervals must haveTheSameElementsAs(
+        List(
+          (Interval(0, 10), "C"),
+          (Interval(20, 30), "A"),
+          (Interval(40, 50), "B")
+        )
+      )
     }
   }
 }
