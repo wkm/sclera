@@ -23,7 +23,7 @@ class InterpreterWrapper extends Loggable {
   val pipedWriter = new PipedWriter()
   val pipeReader = new PipedReader()
   val output = new PrintWriter(pipedWriter)
-  val main = new ScleraIMain(settings, output)
+  val main = new ScleraIMain(settings/*, output*/)
   pipedWriter.connect(pipeReader)
 
   val strReader = new BufferedReader(pipeReader)
@@ -31,10 +31,22 @@ class InterpreterWrapper extends Loggable {
   def interpret(input: String) : InterpretedResult = {
     val result = main.interpret(input)
     val request = main.getPreviousRequest
-    val value = request.lineRep.call("$result")
 
+    val value = result match {
+      case IR.Success =>
+        if(request.isEmpty)
+          null
+        else
+          request.get.lineRep.call("$result")
+
+      case IR.Error =>
+        "<<error>>"
+
+      case IR.Incomplete =>
+        "<<incomplete>>"
+    }
+    
     logger.trace("{} => {}", input, value)
-
 
     return InterpretedResult(result, value)
   }

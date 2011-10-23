@@ -9,12 +9,15 @@ import tools.nsc.Settings
  */
 
 class ScleraIMain (
-  override val settings: Settings,
-  override val out: java.io.PrintWriter
-) extends IMain(settings, out) {
+  override val settings: Settings
+//  override val out: java.io.PrintWriter
+) extends IMain(settings) {
   /**
    * 
    */
   def getPreviousRequest =
-    prevRequestList.last
+    if(prevRequestList.isEmpty)
+      None
+    else
+      Some(prevRequestList.last)
 }
