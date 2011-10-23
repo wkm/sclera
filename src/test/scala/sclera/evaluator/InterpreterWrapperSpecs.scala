@@ -13,8 +13,6 @@ object InterpreterWrapperSpecs extends Specification {
     "Simple evaluation" in {
       val wrapper = new InterpreterWrapper
 
-      println("class: => "+wrapper.interpret("1").value.getClass)
-
       wrapper.interpret("1") must be like {
         case InterpretedResult(IR.Success, value) =>
           value == 1

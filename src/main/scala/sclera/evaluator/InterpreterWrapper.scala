@@ -53,6 +53,6 @@ class InterpreterWrapper extends Loggable {
 
 
   def errorHandler(res: String) = {
-    println("ERROR: "+res);
+    logger.error(res);
   }
 }

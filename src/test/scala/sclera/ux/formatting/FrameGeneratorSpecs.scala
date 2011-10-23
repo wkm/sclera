@@ -1,10 +1,10 @@
 package sclera.ux.formatting
 
 import org.specs._
-import sclera.ux.{BoxSideValues, FrameStyle}
 import java.awt.{Insets, Color}
 import sclera.format.color.SolarizedColorPalette
 import javax.swing.border.{MatteBorder, LineBorder, EmptyBorder}
+import sclera.ux.{BoxCornerValues, BoxSideValues, FrameStyle}
 
 /**
  * sclera.ux.formatting.FrameGeneratorSpecs
@@ -17,6 +17,9 @@ object FrameGeneratorSpecs extends Specification {
         var frameColor: Option[Color] = None
         var frameThickness: Option[BoxSideValues[Int]] = None
         var framePadding: Option[BoxSideValues[Int]] = None
+        var frameRounding: Option[BoxCornerValues[Int]] = None
+        var showFrameCorners: Option[BoxCornerValues[Boolean]] = None
+        var showFrameSides: Option[BoxSideValues[Boolean]] = None
       })
 
       border match {
@@ -38,6 +41,9 @@ object FrameGeneratorSpecs extends Specification {
         var frameThickness: Option[BoxSideValues[Int]] = None
         var framePadding : Option[BoxSideValues[Int]] =
           Some(BoxSideValues[Int](5))
+        var frameRounding: Option[BoxCornerValues[Int]] = None
+        var showFrameCorners: Option[BoxCornerValues[Boolean]] = None
+        var showFrameSides: Option[BoxSideValues[Boolean]] = None
       })
 
       border match {
@@ -58,6 +64,9 @@ object FrameGeneratorSpecs extends Specification {
         var frameColor: Option[Color] = Some(SolarizedColorPalette("base3"))
         var frameThickness: Option[BoxSideValues[Int]] = Some(BoxSideValues[Int](5))
         var framePadding : Option[BoxSideValues[Int]] = None
+        var frameRounding: Option[BoxCornerValues[Int]] = None
+        var showFrameCorners: Option[BoxCornerValues[Boolean]] = None
+        var showFrameSides: Option[BoxSideValues[Boolean]] = None
       })
 
       border match {
@@ -75,6 +84,9 @@ object FrameGeneratorSpecs extends Specification {
         var frameColor: Option[Color] = Some(SolarizedColorPalette("base3"))
         var frameThickness: Option[BoxSideValues[Int]] = Some(BoxSideValues[Int](1, 2, 3, 4))
         var framePadding : Option[BoxSideValues[Int]] = None
+        var frameRounding: Option[BoxCornerValues[Int]] = None
+        var showFrameCorners: Option[BoxCornerValues[Boolean]] = None
+        var showFrameSides: Option[BoxSideValues[Boolean]] = None
       })
 
       border match {
