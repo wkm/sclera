@@ -10,9 +10,32 @@ package sclera.ux.editor
 import collection.immutable.TreeMap
 import util.matching.Regex
 
-object UXEditorScalaKeywords {
-  val keywords = Array("class", "override", "new", "def", "extends", "import", "val", "var")
-  val keywordRegexp = keywords.reduceLeft(_+"|"+_)
+class WordRegexp {
+  var regexp:String = null
+  def words(strings: String*) {
+    regexp = "\\b"+ strings.reduceLeft(_ + "|" + _) +"\\b"
+  }
+}
+
+object UXEditorScalaKeywords extends WordRegexp {
+  words(
+    "case","do","else","for","if","match","while",
+
+    "return","throw","try","catch","finally","abstract","class","def",
+    "extends","final","implicit","import","lazy","new","object",
+    "override","package","private","protected","requires","sealed",
+    "super","this","trait","type","val","var","with","yield"
+  )
+}
+
+object UXEditorScalaTypes extends WordRegexp {
+  words(
+    "Unit","Int","Long","Byte","Short","Char","Float","Double","Boolean",
+    "Any","AnyVal","AnyRef",
+    "Nothing","Null","None",
+    "Array","Seq","List",
+    "String"
+  )
 }
 
 /**
@@ -25,6 +48,7 @@ object ScalaSourceComponent extends Enumeration {
   val Keyword = Value
   val String = Value
   val Comment = Value
+  val Type = Value
 }
 
 object ScalaSourceHighlighter {
@@ -35,7 +59,10 @@ object ScalaSourceHighlighter {
       component: ScalaSourceComponent.Value
   )
 
-  private val regexp = new Regex("(?m)(/\\*.*\\*/)|(\"[^\n]*\")|(\"\"\".*\"\"\")|("+UXEditorScalaKeywords.keywordRegexp+")", "comment", "quote1", "quote2", "keywords")
+  private val regexp = new Regex(
+    "(?m)(/\\*.*\\*/)|(\"[^\n]*\")|(\"\"\".*\"\"\")|("+UXEditorScalaKeywords.regexp+")|("+UXEditorScalaTypes.regexp+")",
+    "comment", "quote1", "quote2", "keywords", "types"
+  )
   def highlight(source: String) =
     regexp.findAllIn(source).matchData.map(textmatch =>
       Component(textmatch.start, textmatch.end, categorizeMatch(textmatch))
@@ -48,6 +75,7 @@ object ScalaSourceHighlighter {
       case _ if textmatch.group("quote1") != null => String
       case _ if textmatch.group("quote2") != null => String
       case _ if textmatch.group("keywords") != null => Keyword
+      case _ if textmatch.group("types") != null => Type
       case _ => Plain
     }
   }

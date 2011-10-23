@@ -90,7 +90,6 @@ class ScalaView(val element: Element)
       if(start == stop) return;
 
       doc.getText(p0 + start, stop-start, segment)
-      println("Text: "+(start, stop)+" => "+doc.getText(p0 + start, stop-start))
       finalX = Utilities.drawTabbedText(segment, finalX, y, graphics, this, start)
     }
 
@@ -120,6 +119,7 @@ class ScalaView(val element: Element)
       case Keyword => "orange"
       case String => "green"
       case Comment => "base02"
+      case Type => "blue"
     })
   }
 }
