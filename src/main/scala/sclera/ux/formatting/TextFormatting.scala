@@ -51,5 +51,7 @@ class BaseBorderFormatting
   extends BaseFormatting
 {
   showFrameSides = Some(BoxSideValues(true))
+  showFrameCorners = Some(BoxCornerValues(true))
+  frameRounding = Some(BoxCornerValues(2))
 }
 object BaseBorderFormatting extends BaseBorderFormatting
