@@ -51,9 +51,9 @@ extends Loggable
       case t:Float => obj.toString
       case t:Double => obj.toString
 
-      case any: AnyRef => any.getClass.getSimpleName+"@{{"+any.toString+"}}"
+      case any: AnyRef => any.getClass.getSimpleName+"@||"+any.toString+"||"
 
-      case _ => SimpleStyledText("{{"+obj.toString+"}}")
+      case _ => SimpleStyledText("||"+obj.toString+"||")
     }
   }
 }
