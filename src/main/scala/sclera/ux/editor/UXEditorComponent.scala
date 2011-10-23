@@ -89,8 +89,9 @@ class ScalaView(val element: Element)
     def drawFragment(start: Int, stop: Int, segment: Segment) {
       if(start == stop) return;
 
-      doc.getText(start, stop-start, segment)
-      finalX = Utilities.drawTabbedText(segment, finalX, y, graphics, this, 0);
+      doc.getText(p0 + start, stop-start, segment)
+      println("Text: "+(start, stop)+" => "+doc.getText(p0 + start, stop-start))
+      finalX = Utilities.drawTabbedText(segment, finalX, y, graphics, this, start)
     }
 
     var lastIndex = 0
@@ -109,9 +110,6 @@ class ScalaView(val element: Element)
       drawFragment(lastIndex, text.length, segment)
     }
 
-    graphics.setColor(SolarizedColorPalette("black"))
-    doc.getText(p0, p1 - p0, segment)
-
     return finalX
   }
 
@@ -119,7 +117,7 @@ class ScalaView(val element: Element)
     import ScalaSourceComponent._
     SolarizedColorPalette(component match {
       case Plain => "black"
-      case Keyword => "red"
+      case Keyword => "orange"
       case String => "green"
       case Comment => "base02"
     })
