@@ -13,7 +13,7 @@ import util.matching.Regex
 class WordRegexp {
   var regexp:String = null
   def words(strings: String*) {
-    regexp = "\\b"+ strings.reduceLeft(_ + "|" + _) +"\\b"
+    regexp = "\\b("+ strings.reduceLeft(_ + "|" + _) +")\\b"
   }
 }
 
@@ -61,7 +61,7 @@ object ScalaSourceHighlighter {
 
   private val regexp = new Regex(
     "(?m)(/\\*.*\\*/)|(\"[^\n]*\")|(\"\"\".*\"\"\")|("+UXEditorScalaKeywords.regexp+")|("+UXEditorScalaTypes.regexp+")",
-    "comment", "quote1", "quote2", "keywords", "types"
+    "comment", "quote1", "quote2", "keywords", "", "types", ""
   )
   def highlight(source: String) =
     regexp.findAllIn(source).matchData.map(textmatch =>
