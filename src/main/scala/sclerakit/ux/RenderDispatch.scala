@@ -43,13 +43,14 @@ extends Loggable
       case s: String => SimpleStyledText(s)
 
       // simple values
-      case t:Int => obj.toString
-      case t:Long => obj.toString
-      case t:Byte => obj.toString
-      case t:Short => obj.toString
-      case t:Char => obj.toString
-      case t:Float => obj.toString
-      case t:Double => obj.toString
+      case t:Int     => t.toString
+      case t:Long    => t.toString
+      case t:Byte    => t.toString
+      case t:Short   => t.toString
+      case t:Char    => t.toString
+      case t:Float   => t.toString
+      case t:Double  => t.toString
+      case t:Boolean => t.toString
 
       case any: AnyRef => any.getClass.getSimpleName+"@||"+any.toString+"||"
 
