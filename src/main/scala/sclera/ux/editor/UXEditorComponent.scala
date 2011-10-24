@@ -21,6 +21,11 @@ class UXEditorComponent (
   with UXComponent
   with Loggable
 {
+  editorKit = new ScalaEditorKit()
+  contentType = "text/scala"
+  font = new Font("Menlo", Font.PLAIN, 12)
+  foreground = SolarizedColorPalette("black")
+
   /**
    * extract the text entryValue from the text pane fragment
    */
@@ -32,11 +37,6 @@ class UXEditorComponent (
   }
 
   SwingKit.executeLater {
-    editorKit = new ScalaEditorKit()
-    contentType = "text/scala"
-    font = new Font("Cousine", Font.BOLD, 12)
-    foreground = SolarizedColorPalette("black")
-
     listenTo(keys)
     reactions += {
       // evaluation

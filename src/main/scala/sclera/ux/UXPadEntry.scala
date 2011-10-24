@@ -7,6 +7,8 @@ import collection.mutable.Buffer
 import sclerakit.ux.RenderDispatch
 import swing.{ScrollPane, Component}
 import javax.swing.{JScrollPane, BorderFactory}
+import javax.swing.event.{DocumentEvent, DocumentListener}
+import java.awt.event.{ComponentEvent, ComponentAdapter, ComponentListener}
 
 /**
  * A representation of an individual input/output pair in a Sclera pad
@@ -57,14 +59,36 @@ class UXPadInputEntry (
   extends UXPadEntry(null, InputFormatting)
   with EntryEvaluates
 {
-  val editor = new UXEditorComponent(this)
-  val scrollPane = new ScrollPane() {
-    contents = editor
-    border = BorderFactory.createEmptyBorder()
-    rowHeaderView = new Component {
-      override lazy val peer = new LineNumbering(editor.peer)
+  val editor = new UXEditorComponent(this);
+  val scrollPane: Component = new Component {
+    override lazy val peer = new JScrollPane(editor.peer) {
+      setBorder(BorderFactory.createEmptyBorder())
+      setRowHeaderView(new LineNumbering(UXPadInputEntry.this.peer, editor.peer))
+      setWheelScrollingEnabled(false)
     }
   }
+
+  editor.peer.addComponentListener(new ComponentAdapter() {
+    override
+    def componentResized(e: ComponentEvent) {
+      pad.peer.invalidate()
+      editor.peer.revalidate()
+      pad.peer.validate()
+    }
+  })
+
+  editor.peer.getDocument.addDocumentListener(new DocumentListener {
+    def changedUpdate(e: DocumentEvent) {}
+
+    def removeUpdate(e: DocumentEvent) {
+      pad.peer.invalidate()
+      editor.peer.revalidate()
+      pad.peer.validate()
+    }
+
+    def insertUpdate(e: DocumentEvent) {}
+  })
+
   set(scrollPane)
 
   def entryContents =

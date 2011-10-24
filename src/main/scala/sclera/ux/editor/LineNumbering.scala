@@ -1,14 +1,14 @@
 package sclera.ux.editor
 
-import javax.swing.JPanel
 import javax.swing.event.{CaretEvent, DocumentEvent, DocumentListener, CaretListener}
 import sclera.util.SwingKit
 import java.beans.{PropertyChangeEvent, PropertyChangeListener}
 import sclerakit.ux.Border
-import sclera.ux.formatting.LineNumberFormatting
 import javax.swing.text.{Utilities, JTextComponent}
 import sclera.format.color.SolarizedColorPalette
 import java.awt.{FontMetrics, Point, Graphics, Font}
+import sclera.ux.formatting.{FrameGenerator, LineNumberFormatting}
+import javax.swing.{JTextPane, JComponent, JPanel}
 
 /**
  * sclera.ux.editor.LineNumbering
@@ -17,7 +17,8 @@ import java.awt.{FontMetrics, Point, Graphics, Font}
 
 class LineNumbering
 (
-    component: JTextComponent,
+    container: JComponent,
+    component: JTextPane,
     minDigits: Int = 3
 )
   extends JPanel
@@ -27,12 +28,15 @@ class LineNumbering
 {
   private val MAX_HEIGHT = Integer.MAX_VALUE - 1000000
 
-  private val outerBorder = Border("", LineNumberFormatting).render.peer
+//  private val outerBorder = FrameGenerator.generate(LineNumberFormatting)
+//  setBorder(outerBorder)
 
   var updateFont = false
   var borderGap = 3
   var digitAlignment = 1.0f
   setFont(new Font("Helvetica", Font.PLAIN, 9))
+
+  println("DOCUMENT: "+component.getDocument)
 
   component.getDocument.addDocumentListener(this)
   component.addCaretListener(this)
@@ -45,7 +49,7 @@ class LineNumbering
     val digits = lines.toString.length
 
     val fontMetrics = getFontMetrics(getFont())
-    val width = fontMetrics.charWidth('0') * digits
+    val width = fontMetrics.charWidth('0') * 3
     val insets = getInsets
     val preferredWidth = insets.left + insets.right + width
 
@@ -104,7 +108,8 @@ class LineNumbering
 
   override
   def caretUpdate(e: CaretEvent) {
-    println("CARET UPDATE")
+    container.invalidate()
+    container.repaint()
   }
 
   override
@@ -130,7 +135,7 @@ class LineNumbering
   var lastHeight: Int = 0
   private
   def documentChanged() {
-    component.repaint()
+    container.repaint()
 
     SwingKit.executeLater(() => {
       val preferredHeight = component.getPreferredSize.height
