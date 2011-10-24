@@ -20,6 +20,7 @@ class WordRegexp {
 object UXEditorScalaKeywords extends WordRegexp {
   words(
     "case","do","else","for","if","match","while",
+    "private", "protected",
 
     "return","throw","try","catch","finally","abstract","class","def",
     "extends","final","implicit","import","lazy","new","object",
