@@ -8,7 +8,7 @@ import swing.{Button, Label, GridBagPanel}
  */
 
 case class Table (
-  var cells: List[List[Any]] = null
+  var cells: Iterable[Iterable[Any]] = null
 )
   extends WillRender
 {

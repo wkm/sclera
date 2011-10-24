@@ -1,6 +1,7 @@
 package sclerakit.ux
 
 import sclera.util.Loggable
+import reflect.Method
 
 /**
  * sclerakit.ux.RenderDispatch
@@ -51,6 +52,12 @@ extends Loggable
       case t:Float   => t.toString
       case t:Double  => t.toString
       case t:Boolean => t.toString
+      case a:Array[Any] => Table(a.map( item => List(item)))
+
+      case m:java.lang.reflect.Method => m.getName+"()"
+
+      case d:java.util.Date => "Date "+d.toString
+
 
       case any: AnyRef => any.getClass.getSimpleName+"@||"+any.toString+"||"
 

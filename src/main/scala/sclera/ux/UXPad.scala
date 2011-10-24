@@ -19,6 +19,13 @@ class UXPad extends MainFrame with Loggable {
     add(new UXPadInputEntry(UXPad.this))
     add(new UXPadInputEntry(UXPad.this))
     add(new UXPadOutputEntry(Border("m")))
+    add(new UXPadOutputEntry(
+
+      Table(
+        List(List(1,2,3),List("a","b","c"))
+      )
+
+    ))
   }
 
   menuBar = new MenuBar() {
