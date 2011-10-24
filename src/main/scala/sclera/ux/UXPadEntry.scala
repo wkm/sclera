@@ -6,9 +6,9 @@ import java.io.StringReader
 import collection.mutable.Buffer
 import sclerakit.ux.RenderDispatch
 import swing.{ScrollPane, Component}
-import javax.swing.{JScrollPane, BorderFactory}
 import javax.swing.event.{DocumentEvent, DocumentListener}
 import java.awt.event.{ComponentEvent, ComponentAdapter, ComponentListener}
+import javax.swing.{ScrollPaneConstants, JScrollPane, BorderFactory}
 
 /**
  * A representation of an individual input/output pair in a Sclera pad
@@ -65,6 +65,8 @@ class UXPadInputEntry (
       setBorder(BorderFactory.createEmptyBorder())
       setRowHeaderView(new LineNumbering(UXPadInputEntry.this.peer, editor.peer))
       setWheelScrollingEnabled(false)
+      setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER)
+      setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER)
     }
   }
 
