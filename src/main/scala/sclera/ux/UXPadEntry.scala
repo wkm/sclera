@@ -1,11 +1,12 @@
 package sclera.ux
 
-import editor.UXEditorComponent
+import editor.{LineNumbering, UXEditorComponent}
 import formatting._
 import java.io.StringReader
-import swing.Component
 import collection.mutable.Buffer
 import sclerakit.ux.RenderDispatch
+import swing.{ScrollPane, Component}
+import javax.swing.{JScrollPane, BorderFactory}
 
 /**
  * A representation of an individual input/output pair in a Sclera pad
@@ -57,7 +58,14 @@ class UXPadInputEntry (
   with EntryEvaluates
 {
   val editor = new UXEditorComponent(this)
-  set(editor)
+  val scrollPane = new ScrollPane() {
+    contents = editor
+    border = BorderFactory.createEmptyBorder()
+    rowHeaderView = new Component {
+      override lazy val peer = new LineNumbering(editor.peer)
+    }
+  }
+  set(scrollPane)
 
   def entryContents =
     Some(editor.textContent)

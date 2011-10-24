@@ -55,3 +55,14 @@ class BaseBorderFormatting
   frameRounding = Some(BoxCornerValues(2))
 }
 object BaseBorderFormatting extends BaseBorderFormatting
+
+
+class LineNumberFormatting
+  extends BaseFormatting
+{
+  frameColor = Some(SolarizedColorPalette("base2"))
+  showFrameSides = Some(BoxSideValues(false, true, false, false))
+  showFrameCorners = Some(BoxCornerValues(false))
+  frameRounding = Some(BoxCornerValues(0))
+}
+object LineNumberFormatting extends LineNumberFormatting
