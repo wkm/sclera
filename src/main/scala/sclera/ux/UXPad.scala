@@ -5,11 +5,11 @@ import wrappers.NestedTextComponent
 import java.awt.Dimension
 import actors.Actor
 import sclera.util.Loggable
-import sclera.format.color.SolarizedColorPalette
 import swing._
 import event.{WindowDeactivated, WindowActivated}
 import sclerakit.ux.{Border, Table, RenderDispatch}
 import javax.swing.BorderFactory
+import sclera.format.color.{DefaultColorPalette, SolarizedColorPalette}
 
 /**
  * Represents a single Sclera pad/file
@@ -46,7 +46,7 @@ class UXPad extends MainFrame with Loggable {
     border = BorderFactory.createEmptyBorder()
   }
   size = new Dimension(400, 500)
-  background = SolarizedColorPalette("white")
+  background = DefaultColorPalette("white")
 
   listenTo(this)
   reactions += {

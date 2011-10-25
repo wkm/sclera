@@ -1,7 +1,7 @@
 package sclera.ux.formatting
 
 import java.awt.Color
-import sclera.format.color.SolarizedColorPalette
+import sclera.format.color.DefaultColorPalette
 import sclera.ux.{BoxCornerValues, BoxSideValues, UXPadEntryStyle}
 
 /**
@@ -31,7 +31,7 @@ extends BaseFormatting {
   fontSize = 12
 
   marginWidth = BoxSideValues[Int](20, 32, 0, 32)
-  frameColor = Some(SolarizedColorPalette("base1"))
+  frameColor = Some(DefaultColorPalette("base1"))
   frameThickness = Some(BoxSideValues[Int](1))
   framePadding = None
   frameRounding = Some(BoxCornerValues(3, 0))
@@ -60,7 +60,7 @@ object BaseBorderFormatting extends BaseBorderFormatting
 class LineNumberFormatting
   extends BaseFormatting
 {
-  frameColor = Some(SolarizedColorPalette("base2"))
+  frameColor = Some(DefaultColorPalette("base2"))
   showFrameSides = Some(BoxSideValues(false, true, false, false))
   showFrameCorners = Some(BoxCornerValues(false))
   frameRounding = Some(BoxCornerValues(0))

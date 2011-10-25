@@ -4,7 +4,6 @@ package sclera.ux.editor
 import javax.swing.text._
 import collection.immutable.TreeMap
 import sclera.ux.wrappers.TextPaneComponent
-import sclera.format.color.SolarizedColorPalette
 import java.awt.event.{FocusEvent, FocusListener}
 import java.io.StringWriter
 import sclera.util.{Loggable, SwingKit}
@@ -13,6 +12,7 @@ import swing.event.{UIElementResized, Key, KeyTyped}
 import sclera.ux.{UXPadInputEntry, UXComponent, UXPadEntry, UX}
 import reflect.BeanProperty
 import java.nio.channels.ServerSocketChannel
+import sclera.format.color.{DefaultColorPalette, SolarizedColorPalette}
 
 class UXEditorComponent (
     val padEntry: UXPadInputEntry
@@ -24,7 +24,7 @@ class UXEditorComponent (
   editorKit = new ScalaEditorKit()
   contentType = "text/scala"
   font = new Font("Menlo", Font.PLAIN, 12)
-  foreground = SolarizedColorPalette("black")
+  foreground = DefaultColorPalette("black")
 
   /**
    * extract the text entryValue from the text pane fragment
@@ -114,7 +114,7 @@ class ScalaView(val element: Element)
 
   private def colorForComponent(component: ScalaSourceComponent.ScalaSourceComponent) = {
     import ScalaSourceComponent._
-    SolarizedColorPalette(component match {
+    DefaultColorPalette(component match {
       case Plain => "black"
       case Keyword => "orange"
       case String => "green"

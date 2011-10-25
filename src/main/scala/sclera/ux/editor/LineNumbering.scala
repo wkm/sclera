@@ -9,6 +9,7 @@ import sclera.format.color.SolarizedColorPalette
 import java.awt.{FontMetrics, Point, Graphics, Font}
 import sclera.ux.formatting.{FrameGenerator, LineNumberFormatting}
 import javax.swing.{JTextPane, JComponent, JPanel}
+import sclera.format.color.DefaultColorPalette
 
 /**
  * sclera.ux.editor.LineNumbering
@@ -72,7 +73,7 @@ class LineNumbering
 
     while (rowStartOffset <= endOffset)
 		{
-      g.setColor(SolarizedColorPalette("base1"));
+      g.setColor(DefaultColorPalette("base1"));
 
       val lineNumber = textLineNumber(rowStartOffset);
       val stringWidth = fontMetrics.stringWidth( lineNumber );

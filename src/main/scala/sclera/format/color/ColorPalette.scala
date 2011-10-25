@@ -1,7 +1,6 @@
 package sclera.format.color
 
 import java.awt.Color
-import sclera.format.color.SolarizedColorPalette
 
 class ColorPalette {
   var colors = Map[String, Color]()

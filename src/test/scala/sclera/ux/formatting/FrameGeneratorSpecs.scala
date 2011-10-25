@@ -2,9 +2,9 @@ package sclera.ux.formatting
 
 import org.specs._
 import java.awt.{Insets, Color}
-import sclera.format.color.SolarizedColorPalette
 import javax.swing.border.{MatteBorder, LineBorder, EmptyBorder}
 import sclera.ux.{BoxCornerValues, BoxSideValues, FrameStyle}
+import sclera.format.color.{DefaultColorPalette, SolarizedColorPalette}
 
 /**
  * sclera.ux.formatting.FrameGeneratorSpecs
@@ -61,7 +61,7 @@ object FrameGeneratorSpecs extends Specification {
 
     "create simple line border" in {
       val border = FrameGenerator.generate(new FrameStyle {
-        var frameColor: Option[Color] = Some(SolarizedColorPalette("base3"))
+        var frameColor: Option[Color] = Some(DefaultColorPalette("base3"))
         var frameThickness: Option[BoxSideValues[Int]] = Some(BoxSideValues[Int](5))
         var framePadding : Option[BoxSideValues[Int]] = None
         var frameRounding: Option[BoxCornerValues[Int]] = None
@@ -71,7 +71,7 @@ object FrameGeneratorSpecs extends Specification {
 
       border match {
         case e: LineBorder =>
-          e.getLineColor mustBe SolarizedColorPalette("base3")
+          e.getLineColor mustBe DefaultColorPalette("base3")
           e.getThickness mustBe 5
 
         case _ =>
@@ -81,7 +81,7 @@ object FrameGeneratorSpecs extends Specification {
 
     "create complicated line border" in {
       val border = FrameGenerator.generate(new FrameStyle {
-        var frameColor: Option[Color] = Some(SolarizedColorPalette("base3"))
+        var frameColor: Option[Color] = Some(DefaultColorPalette("base3"))
         var frameThickness: Option[BoxSideValues[Int]] = Some(BoxSideValues[Int](1, 2, 3, 4))
         var framePadding : Option[BoxSideValues[Int]] = None
         var frameRounding: Option[BoxCornerValues[Int]] = None
@@ -91,7 +91,7 @@ object FrameGeneratorSpecs extends Specification {
 
       border match {
         case m: MatteBorder =>
-          m.getMatteColor mustBe SolarizedColorPalette("base3")
+          m.getMatteColor mustBe DefaultColorPalette("base3")
           val insets = m.getBorderInsets
           insets.left mustBe 4
           insets.top mustBe 1
