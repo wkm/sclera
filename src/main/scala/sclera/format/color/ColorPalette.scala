@@ -1,6 +1,7 @@
 package sclera.format.color
 
 import java.awt.Color
+import sclera.format.color.SolarizedColorPalette
 
 class ColorPalette {
   var colors = Map[String, Color]()
@@ -20,3 +21,5 @@ class ColorPalette {
   def apply(name: String): Color =
     return colors.get(name).getOrElse(Color.decode("0xd33682"))
 }
+
+object DefaultColorPalette extends SolarizedColorPalette

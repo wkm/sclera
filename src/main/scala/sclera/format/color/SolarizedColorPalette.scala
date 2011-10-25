@@ -1,6 +1,6 @@
 package sclera.format.color
 
-object SolarizedColorPalette extends ColorPalette {
+class SolarizedColorPalette extends ColorPalette {
   addHexColor("base03",  "#002b36")
   addHexColor("base02",  "#073642")
   addHexColor("base01",  "#586e65")
@@ -21,3 +21,4 @@ object SolarizedColorPalette extends ColorPalette {
   addHexColor("black",   "#000000")
   addHexColor("white",   "#ffffff")
 }
+object SolarizedColorPalette extends SolarizedColorPalette
