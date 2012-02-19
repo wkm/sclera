@@ -2,7 +2,7 @@ name := "Sclera"
 
 organization := "com.wiktormacura"
 
-scalacOptions += "-deprecation"
+//scalacOptions += "-deprecation"
 
 libraryDependencies ++= Seq(
   "org.scala-tools.testing" % "specs_2.8.0" % "1.6.5" % "test",
@@ -12,4 +12,4 @@ libraryDependencies ++= Seq(
   "org.slf4j" % "slf4j-api" % "1.6.2"
 )
 
-fork in run := true
+//fork in run := true

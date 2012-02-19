@@ -41,5 +41,12 @@ object InterpreterWrapperSpecs extends Specification {
           value == 12
       }
     }
+
+    "Define methods" in {
+      val wrapper = new InterpreterWrapper
+      wrapper.interpret("def foo(x:Int) = x+1") must be like {
+        case v => println(v); true
+      }
+    }
   }
 }

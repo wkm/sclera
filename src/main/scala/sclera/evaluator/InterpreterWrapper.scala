@@ -31,13 +31,19 @@ class InterpreterWrapper extends Loggable {
   def interpret(input: String) : InterpretedResult = {
     val result = main.interpret(input)
     val request = main.getPreviousRequest
-
+    
     val value = result match {
       case IR.Success =>
         if(request.isEmpty)
           null
-        else
-          request.get.lineRep.call("$result")
+        else {
+          val value = request.get.lineRep.callOpt("$result")
+
+          if(value.isDefined)
+            value.get
+          else
+            null
+        }
 
       case IR.Error =>
         "<<error>>"
