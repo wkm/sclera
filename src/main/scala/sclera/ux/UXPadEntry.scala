@@ -7,8 +7,8 @@ import collection.mutable.Buffer
 import sclerakit.ux.RenderDispatch
 import swing.{ScrollPane, Component}
 import javax.swing.event.{DocumentEvent, DocumentListener}
-import java.awt.event.{ComponentEvent, ComponentAdapter, ComponentListener}
 import javax.swing.{ScrollPaneConstants, JScrollPane, BorderFactory}
+import java.awt.event._
 
 /**
  * A representation of an individual input/output pair in a Sclera pad
@@ -32,6 +32,16 @@ abstract class UXPadEntry (
 
   def createContainer =
     FrameGenerator.generate(style)
+  
+  def listener() = {
+    peer.addFocusListener(new FocusListener {
+      def focusGained(p1: FocusEvent) {
+
+      }
+
+      def focusLost(p1: FocusEvent) {}
+    })
+  }
 };
 
 object UXPadEntry {

@@ -40,6 +40,11 @@ extends BaseFormatting {
 }
 object InputFormatting extends InputFormatting
 
+object ActiveInputFormatting extends InputFormatting {
+  frameThickness = Some(BoxSideValues[Int](3))
+}
+
+
 class OutputFormatting
 extends BaseFormatting {
   marginWidth = BoxSideValues[Int](0, 32, 2, 32)
