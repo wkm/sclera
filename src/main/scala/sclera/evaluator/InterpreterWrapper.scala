@@ -1,9 +1,7 @@
 package sclera.evaluator
 
-import sun.tools.javap.JavapPrinter
-import tools.nsc.{Interpreter, Settings}
+import tools.nsc.Settings
 import sclera.ux.UXPad
-import tools.nsc.interpreter.{Results, IMain}
 import java.io._
 
 import tools.nsc.interpreter.IR

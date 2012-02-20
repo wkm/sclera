@@ -15,7 +15,7 @@ extends Loggable
 
   /**
    * dispatch will continually apply rendering rules to the object
-   * until finally an object with trait WillRender is returned
+   * until an object with trait WillRender is returned
    */
   def dispatch(obj: Any): WillRender = {
     var interim = internalDispatch(obj)
@@ -35,8 +35,6 @@ extends Loggable
   }
 
   def internalDispatch(obj: Any): Any = {
-    logger.trace("I-DISPATCH ON: {}", obj)
-
     obj match {
       // trivial cases
       case _ if obj == null => SimpleStyledText("(null)")
